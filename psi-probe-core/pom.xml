@@ -42,6 +42,16 @@
     </properties>
 
     <dependencies>
+
+        <!-- Fake out build in order to ensure order -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>thirdParty</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+            <type>pom</type>
+        </dependency>
+
         <!-- tomcat libs start -->
         <dependency>
             <groupId>org.apache.tomcat</groupId>
