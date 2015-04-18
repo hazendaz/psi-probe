@@ -77,6 +77,7 @@
         <module>psi-probe-tomcat10</module>
         <module>psi-probe-tomcat11</module>
         <module>psi-probe-web</module>
+        <module>thirdParty</module>
     </modules>
 
     <scm>
