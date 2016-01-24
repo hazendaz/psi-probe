@@ -49,6 +49,8 @@ import psiprobe.tools.logging.log4j2.Log4J2AppenderAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerConfigAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerContextAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2WebLoggerContextUtilsAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessFactoryAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessLoggerAccessor;
 import psiprobe.tools.logging.logback.LogbackFactoryAccessor;
 import psiprobe.tools.logging.logback.LogbackLoggerAccessor;
 import psiprobe.tools.logging.logback13.Logback13FactoryAccessor;
@@ -240,6 +242,8 @@ public class LogResolverBean {
     loggers.add("log4j2");
     loggers.add("logback");
     loggers.add("logback13");
+    loggers.add("logbackAccess");
+    loggers.add("logbackAccess13");
     loggers.add("tomcatSlf4jLogback");
     loggers.add("tomcatSlf4jLogback13");
 
@@ -281,6 +285,10 @@ public class LogResolverBean {
               result = getLogbackLogDestination(cl, application, root, logName, logIndex);
             } else if ("logback13".equals(logType)) {
               result = getLogback13LogDestination(cl, application, root, logName, logIndex);
+            } else if ("logbackAccess".equals(logType)) {
+              return getLogbackAccessLogDestination(cl, application, root, logName, logIndex);
+            } else if ("logbackAccess13".equals(logType)) {
+              return getLogbackAccess13LogDestination(cl, application, root, logName, logIndex);
             } else if ("tomcatSlf4jLogback".equals(logType)) {
               result = getLogbackTomcatJuliLogDestination(cl, application, root, logName, logIndex);
             } else if ("tomcatSlf4jLogback13".equals(logType)) {
@@ -433,6 +441,26 @@ public class LogResolverBean {
     } catch (Exception e) {
       logger.debug("Could not resolve tomcat-slf4j-logback 1.3 loggers for '{}'", applicationName,
           e);
+    }
+
+    // check for Logback Access loggers
+    try {
+      LogbackAccessFactoryAccessor logbackAccessAccessor =
+          new LogbackAccessFactoryAccessor(cl);
+      logbackAccessAccessor.setApplication(application);
+      appenders.addAll(logbackAccessAccessor.getAppenders());
+    } catch (Exception e) {
+      logger.debug("Could not resolve logback-access loggers for '{}'", applicationName, e);
+    }
+
+    // check for Logback Access 1.3 loggers
+    try {
+      LogbackAccessFactoryAccessor logbackAccessAccessor =
+          new LogbackAccessFactoryAccessor(cl);
+      logbackAccessAccessor.setApplication(application);
+      appenders.addAll(logbackAccessAccessor.getAppenders());
+    } catch (Exception e) {
+      logger.debug("Could not resolve logback-access 1.3 loggers for '{}'", applicationName, e);
     }
   }
 
@@ -722,6 +750,58 @@ public class LogResolverBean {
       }
     } catch (Exception e) {
       logger.debug("getLogback13LogDestination failed", e);
+    }
+    return null;
+  }
+
+  /**
+   * Gets the logback access log destination.
+   *
+   * @param cl the cl
+   * @param application the application
+   * @param root the root
+   * @param logName the log name
+   * @param appenderName the appender name
+   * @return the logback log destination
+   */
+  private LogDestination getLogbackAccessLogDestination(ClassLoader cl, Application application,
+      boolean root, String logName, String appenderName) {
+
+    try {
+      LogbackAccessFactoryAccessor manager = new LogbackAccessFactoryAccessor(cl);
+      manager.setApplication(application);
+      LogbackAccessLoggerAccessor log = root ? manager.getRootLogger() : manager.getLogger(logName);
+      if (log != null) {
+        return log.getAppender(appenderName);
+      }
+    } catch (Exception e) {
+      logger.debug("getLogbackAccessLogDestination failed", e);
+    }
+    return null;
+  }
+
+  /**
+   * Gets the logback access 1.3 log destination.
+   *
+   * @param cl the cl
+   * @param application the application
+   * @param root the root
+   * @param logName the log name
+   * @param appenderName the appender name
+   * @return the logback log destination
+   */
+  private LogDestination getLogbackAccess13LogDestination(ClassLoader cl, Application application,
+      boolean root, String logName, String appenderName) {
+
+    try {
+      LogbackAccessFactoryAccessor manager = new LogbackAccessFactoryAccessor(cl);
+      manager.setApplication(application);
+      LogbackAccessLoggerAccessor log = root ? manager.getRootLogger() : manager.getLogger(logName);
+      if (log != null) {
+        return log.getAppender(appenderName);
+      }
+    } catch (Exception e) {
+      logger.debug("getLogbackAccessLogDestination failed", e);
     }
     return null;
   }
