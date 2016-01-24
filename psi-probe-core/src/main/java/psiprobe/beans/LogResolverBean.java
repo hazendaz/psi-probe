@@ -48,6 +48,8 @@ import psiprobe.tools.logging.log4j2.Log4J2AppenderAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerConfigAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerContextAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2WebLoggerContextUtilsAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessFactoryAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessLoggerAccessor;
 import psiprobe.tools.logging.logback.LogbackFactoryAccessor;
 import psiprobe.tools.logging.logback.LogbackLoggerAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackFactoryAccessor;
@@ -242,7 +244,7 @@ public class LogResolverBean {
       result = getCatalinaLogDestination(ctx, application);
     } else if (logIndex != null && ("jdk".equals(logType) || "log4j".equals(logType)
         || "log4j2".equals(logType) || "logback".equals(logType))
-        || "tomcatSlf4jLogback".equals(logType)) {
+        || "logbackAccess".equals(logType) || "tomcatSlf4jLogback".equals(logType)) {
       if (context && ctx != null && !"log4j2".equals(logType)) {
         result = getCommonsLogDestination(ctx, application, logIndex);
       } else if (ctx != null && "log4j2".equals(logType)) {
@@ -264,6 +266,8 @@ public class LogResolverBean {
               result = getLog4JLogDestination(cl, application, root, logName, logIndex);
             } else if ("logback".equals(logType)) {
               result = getLogbackLogDestination(cl, application, root, logName, logIndex);
+            } else if ("logbackAccess".equals(logType)) {
+              return getLogbackAccessLogDestination(cl, application, root, logName, logIndex);
             } else if ("tomcatSlf4jLogback".equals(logType)) {
               result = getLogbackTomcatJuliLogDestination(cl, application, root, logName, logIndex);
             }
@@ -403,6 +407,16 @@ public class LogResolverBean {
       appenders.addAll(tomcatSlf4jLogbackAccessor.getAppenders());
     } catch (Exception e) {
       logger.debug("Could not resolve tomcat-slf4j-logback loggers for '{}'", applicationName, e);
+    }
+
+    // check for Logback Access loggers
+    try {
+      LogbackAccessFactoryAccessor logbackAccessAccessor =
+          new LogbackAccessFactoryAccessor(cl);
+      logbackAccessAccessor.setApplication(application);
+      appenders.addAll(logbackAccessAccessor.getAppenders());
+    } catch (Exception e) {
+      logger.debug("Could not resolve logback-access loggers for '{}'", applicationName, e);
     }
   }
 
@@ -632,6 +646,32 @@ public class LogResolverBean {
       }
     } catch (Exception e) {
       logger.debug("getLogbackLogDestination failed", e);
+    }
+    return null;
+  }
+
+  /**
+   * Gets the logback access log destination.
+   *
+   * @param cl the cl
+   * @param application the application
+   * @param root the root
+   * @param logName the log name
+   * @param appenderName the appender name
+   * @return the logback log destination
+   */
+  private LogDestination getLogbackAccessLogDestination(ClassLoader cl, Application application,
+      boolean root, String logName, String appenderName) {
+
+    try {
+      LogbackAccessFactoryAccessor manager = new LogbackAccessFactoryAccessor(cl);
+      manager.setApplication(application);
+      LogbackAccessLoggerAccessor log = root ? manager.getRootLogger() : manager.getLogger(logName);
+      if (log != null) {
+        return log.getAppender(appenderName);
+      }
+    } catch (Exception e) {
+      logger.debug("getLogbackAccessLogDestination failed", e);
     }
     return null;
   }

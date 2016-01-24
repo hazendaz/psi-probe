@@ -26,6 +26,7 @@ import psiprobe.tools.logging.jdk.Jdk14HandlerAccessor;
 import psiprobe.tools.logging.log4j.Log4JAppenderAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2AppenderAccessor;
 import psiprobe.tools.logging.logback.LogbackAppenderAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessAppenderAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackAppenderAccessor;
 
 /**
@@ -61,6 +62,9 @@ public class ChangeLogLevelController extends AbstractLogHandlerController {
       } else if (logDest instanceof LogbackAppenderAccessor) {
         LogbackAppenderAccessor accessor = (LogbackAppenderAccessor) logDest;
         accessor.getLoggerAccessor().setLevel(level);
+      } else if (logDest instanceof LogbackAccessAppenderAccessor) {
+          LogbackAccessAppenderAccessor accessor = (LogbackAccessAppenderAccessor) logDest;
+          accessor.getLoggerAccessor().setLevel(level);
       } else if (logDest instanceof TomcatSlf4jLogbackAppenderAccessor) {
         TomcatSlf4jLogbackAppenderAccessor accessor = (TomcatSlf4jLogbackAppenderAccessor) logDest;
         accessor.getLoggerAccessor().setLevel(level);
