@@ -23,10 +23,15 @@
 
 	<head>
 		<title><spring:message code="probe.jsp.title.applications"/></title>
+		<link href="<c:url value="/css/dataTables.jqueryui.min.css" />" rel="stylesheet">
+		<link href="<c:url value="/css/jquery-ui.css" />" rel="stylesheet">
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/behaviour.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-1.12.0.min.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/dataTables.jqueryui.min.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery.dataTables.min.js'/>"></script>
 	</head>
 
 	<body>
