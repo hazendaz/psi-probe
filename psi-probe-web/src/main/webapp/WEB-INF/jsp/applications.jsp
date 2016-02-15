@@ -13,7 +13,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-<%@ taglib uri="http://displaytag.sf.net" prefix="display" %>
 <%@ taglib uri="https://github.com/psi-probe/psi-probe/jsp/tags" prefix="probe" %>
 
 <%-- Probe "home" page. Displays list of web applications. It is assumed that command
@@ -26,10 +25,6 @@
         <title><spring:message code="probe.jsp.title.applications"/></title>
         <link href="<c:url value="/css/dataTables.jqueryui.min.css" />" rel="stylesheet">
         <link href="<c:url value="/css/jquery-ui.css" />" rel="stylesheet">
-        <script src="<c:url value='/js/prototype.js'/>"></script>
-        <script src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
-        <script src="<c:url value='/js/func.js'/>"></script>
-        <script src="<c:url value='/js/behaviour.js'/>"></script>
         <script src="<c:url value='/js/jquery-1.12.0.min.js'/>"></script>
         <script src="<c:url value='/js/dataTables.jqueryui.min.js'/>"></script>
         <script src="<c:url value='/js/jquery.dataTables.min.js'/>"></script>
@@ -129,10 +124,36 @@
             </div>
         </c:if>
 
-        <display:table class="genericTbl" name="apps" uid="app" style="border-spacing:0;border-collapse:separate;" requestURI="" defaultsort="1"
-                defaultorder="ascending" cellpadding="0">
+        <table id="apps" class="display" cellspacing="0" cellpadding="0">
 
-            <display:column class="leftMostIcon" title="&#160;">
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th><spring:message code='probe.jsp.applications.col.name'/></th>
+                <th><spring:message code='probe.jsp.applications.col.status'/></th>
+                <th>&nbsp;</th>
+                <th><spring:message code='probe.jsp.applications.col.description'/></th>
+                <th><spring:message code='probe.jsp.applications.col.requestCount'/></th>
+                <th><spring:message code='probe.jsp.applications.col.sessionCount'/></th>
+                <th><spring:message code='probe.jsp.applications.col.sessionAttributeCount'/></th>
+                <c:if test="${param.size}">
+                    <th><spring:message code='probe.jsp.applications.col.size'/></th>
+                </c:if>
+                <th><spring:message code='probe.jsp.applications.col.contextAttributeCount'/></th>
+                <th><spring:message code='probe.jsp.applications.col.sessionTimeout'/></th>
+                <th><spring:message code='probe.jsp.applications.col.jsp'/></th>
+                <c:if test="${!no_resources}">
+                    <th><spring:message code='probe.jsp.applications.col.jdbcUsage'/></th>
+                </c:if>
+                <th><spring:message code='probe.jsp.applications.col.distributable'/></th>
+                <th><spring:message code='probe.jsp.applications.col.serializable'/></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td class="leftMostIcon">
                 <c:set var="confirmMessage">
                     <spring:message code="probe.jsp.applications.undeploy.confirm" arguments="${app.name}"/>
                 </c:set>
@@ -142,15 +163,15 @@
                             alt="<spring:message code='probe.jsp.applications.alt.undeploy'/>"
                             title="<spring:message code='probe.jsp.applications.title.undeploy' arguments='${app.name}'/>"/>
                 </a>
-            </display:column>
+            </td>
 
-            <display:column sortable="true" sortProperty="name" titleKey="probe.jsp.applications.col.name">
+            <td>
                 <a href="<c:url value='/appsummary.htm'><c:param name='webapp' value='${app.name}'/><c:param name='size'><c:out value='${param.size}'/></c:param></c:url>">
                     ${app.name}
                 </a>
-            </display:column>
+            </td>
 
-            <display:column sortable="true" titleKey="probe.jsp.applications.col.status" sortProperty="available">
+            <td>
                 <c:url var="toggleAppUrl" value="/app/toggle.ajax"/>
                 <c:choose>
                     <c:when test="${app.available}">
@@ -172,9 +193,9 @@
                         </a>
                     </c:otherwise>
                 </c:choose>
-            </display:column>
+            </td>
 
-            <display:column title="&#160;">
+            <td>
                 <a onclick="return handleContextReload('${app_rowNum}', '${app.name}');"
                         class="imglink"
                         href="<c:url value='/app/reload.htm'><c:param name='webapp' value='${app.name}' /></c:url>">
@@ -183,53 +204,48 @@
                             alt="<spring:message code='probe.jsp.applications.alt.reload'/>"
                             title="<spring:message code='probe.jsp.applications.title.reload' arguments='${app.name}'/>"/>
                 </a>
-            </display:column>
+            </td>
 
-            <display:column titleKey="probe.jsp.applications.col.description">
+            <td>
                 ${app.displayName}&#160;
-            </display:column>
+            </td>
 
-            <display:column sortable="true" titleKey="probe.jsp.applications.col.requestCount" sortProperty="requestCount">
+            <td>
                 <a href="<c:url value='/servlets.htm'><c:param name='webapp' value='${app.name}' /></c:url>">
                     ${app.requestCount}
                 </a>
-            </display:column>
+            </td>
 
-            <display:column sortable="true" sortProperty="sessionCount"
-                    titleKey="probe.jsp.applications.col.sessionCount">
+            <td>
                 <a href="<c:url value='/sessions.htm'><c:param name='webapp' value='${app.name}'/><c:param name='size'><c:out value='${param.size}'/></c:param></c:url>">
                     ${app.sessionCount}
                 </a>
-            </display:column>
+            </td>
 
-            <display:column property="sessionAttributeCount" sortable="true"
-                    titleKey="probe.jsp.applications.col.sessionAttributeCount"/>
+            <td>${sessionAttributeCount}</td>
 
             <c:if test="${param.size}">
-                <display:column sortProperty="size" sortable="true"
-                                titleKey="probe.jsp.applications.col.size" class="highlighted">
+                <td class="highlighted">
                     <probe:volume value="${app.size}"/>
-                </display:column>
+                </td>
             </c:if>
 
-            <display:column sortable="true" sortProperty="contextAttributeCount"
-                    titleKey="probe.jsp.applications.col.contextAttributeCount">
+            <td>
                 <a href="<c:url value='/appattributes.htm'><c:param name='webapp' value='${app.name}'/></c:url>">
                     ${app.contextAttributeCount}
                 </a>
-            </display:column>
+            </td>
 
-            <display:column property="sessionTimeout" sortable="true" titleKey="probe.jsp.applications.col.sessionTimeout"/>
+            <td>${sessionTimeout}</td>
 
-            <display:column titleKey="probe.jsp.applications.col.jsp">
+            <td>
                 <a class="imglink" href="<c:url value='/app/jsp.htm'><c:param name='webapp' value='${app.name}'/></c:url>">
                     <img border="0" src="${pageContext.request.contextPath}/css/classic/gifs/silk/magnifier.png" alt="<spring:message code='probe.jsp.applications.jsp.view'/>">
                 </a>
-            </display:column>
+            </td>
 
             <c:if test="${!no_resources}">
-                <display:column sortable="true" sortProperty="dataSourceBusyScore"
-                        titleKey="probe.jsp.applications.col.jdbcUsage" class="score_wrapper">
+                <td class="score_wrapper">
                     <div class="score_wrapper">
                         <probe:score value="${app.dataSourceBusyScore}" value2="${app.dataSourceEstablishedScore - app.dataSourceBusyScore}" fullBlocks="10" partialBlocks="5" showEmptyBlocks="true" showA="true" showB="true">
                             <a class="imglink" href="<c:url value='/resources.htm'><c:param name='webapp' value='${app.name}' /></c:url>"><img border="0"
@@ -237,11 +253,10 @@
                                     title="<spring:message code='probe.jsp.applications.jdbcUsage.title' arguments='${app.dataSourceBusyScore},${app.dataSourceEstablishedScore}'/>"/></a>
                         </probe:score>
                     </div>
-                </display:column>
+                </td>
             </c:if>
 
-            <display:column titleKey="probe.jsp.applications.col.distributable" sortable="true"
-                    sortProperty="distributable">
+            <td>
                 <c:choose>
                     <c:when test="${app.distributable}">
                         <span class="okValue"><spring:message code="probe.jsp.generic.yes"/></span>
@@ -250,9 +265,9 @@
                         <span class="errorValue"><spring:message code="probe.jsp.generic.no"/></span>
                     </c:otherwise>
                 </c:choose>
-            </display:column>
+            </td>
 
-            <display:column titleKey="probe.jsp.applications.col.serializable" sortable="true" sortProperty="serializable">
+            <td>
                 <c:choose>
                     <c:when test="${app.serializable}">
                         <span class="okValue"><spring:message code="probe.jsp.applications.serializable.yes"/></span>
@@ -261,12 +276,21 @@
                         <span class="errorValue"><spring:message code="probe.jsp.applications.serializable.no"/></span>
                     </c:otherwise>
                 </c:choose>
-            </display:column>
-
-        </display:table>
+            </td>
+        </tr>
+        </tbody>
+        </table>
 
         <script>
             setupHelpToggle('<c:url value="/help/applications.ajax"/>');
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#apps').DataTable( {
+                    "processing": true,
+                    "serverSide": true
+                });
+            } );
         </script>
     </div>
 </body>
