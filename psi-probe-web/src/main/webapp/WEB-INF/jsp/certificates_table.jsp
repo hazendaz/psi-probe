@@ -34,7 +34,13 @@
     </display:column>
 
     <display:column title="&#160;">
+    <c:set var="confirmMessage">
+        <spring:message code="probe.jsp.certificates.delete.confirm" arguments="${cert.alias}"/>
+    </c:set>
+    <a class="imglink" onclick="return confirm('${confirmMessage}')" href="<c:url value='/adm/deleteCert.htm'>
+        <c:param name='alias' value='${cert.alias}'/></c:url>">
         <img border="0" src="${pageContext.request.contextPath}/css/classic/gifs/silk/magnifier.png" title="<spring:message code='probe.jsp.certificates.viewCertDetails'/>">
+    </a>
     </display:column>
 
 </display:table>
