@@ -12,8 +12,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" session="false" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator" %>
-<%@ taglib uri="http://www.opensymphony.com/sitemesh/page" prefix="page" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="https://github.com/psi-probe/psi-probe/jsp/tags" prefix="probe" %>
 
@@ -23,14 +21,14 @@
 <!DOCTYPE html>
 <html lang="${lang}">
     <head>
-        <title>Probe - <decorator:title default="Tomcat management"/></title>
+        <title>Probe - <sitemesh:write property='title' default="Tomcat management"/></title>
         <link type="image/gif" rel="shortcut icon" href="<c:url value='/css/favicon.gif'/>"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/tables.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/main.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/mainnav.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/messages.css"/>
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/tooltip.css"/>
-        <decorator:head/>
+        <sitemesh:write property='head'/>
     </head>
 
     <body>
@@ -43,7 +41,7 @@
                     <spring:message code="probe.jsp.version" arguments="${version},<b>${hostname}</b>"/>,
                     <span id="uptime"></span>
                 </li>
-                <li id="title"><decorator:title default="Probe"/></li>
+                <li id="title"><sitemesh:write property='title' default="Probe"/></li>
             </ul>
         </div>
 
@@ -105,12 +103,12 @@
         <c:choose>
             <c:when test="${! empty use_decorator}">
                 <page:applyDecorator name="${use_decorator}">
-                    <decorator:body/>
+                    <sitemesh:write property='body' />
                 </page:applyDecorator>
             </c:when>
             <c:otherwise>
                 <div id="mainBody">
-                    <decorator:body/>
+                    <sitemesh:write property='body' />
                 </div>
             </c:otherwise>
         </c:choose>
