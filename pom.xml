@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     Licensed under the GPL License. You may not use this file except in compliance with the License.
@@ -188,7 +189,7 @@
         <oshi.version>6.8.1</oshi.version>
         <quartz.version>2.5.0</quartz.version>
         <servlet-api.version>6.1.0</servlet-api.version>
-        <sitemesh.version>2.6.1</sitemesh.version>
+        <sitemesh.version>3.0.1</sitemesh.version>
         <slf4j.version>2.0.17</slf4j.version>
         <spotbugs.version>4.9.3</spotbugs.version>
         <spring.version>6.2.7</spring.version>
@@ -587,7 +588,7 @@
 
             <!-- XML -->
             <dependency>
-                <groupId>com.github.hazendaz</groupId>
+                <groupId>org.sitemesh</groupId>
                 <artifactId>sitemesh</artifactId>
                 <version>${sitemesh.version}</version>
                 <exclusions>
