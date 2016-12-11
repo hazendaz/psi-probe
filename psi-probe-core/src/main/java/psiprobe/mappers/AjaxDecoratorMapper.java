@@ -10,11 +10,6 @@
  */
 package psiprobe.mappers;
 
-import com.opensymphony.module.sitemesh.Config;
-import com.opensymphony.module.sitemesh.Decorator;
-import com.opensymphony.module.sitemesh.DecoratorMapper;
-import com.opensymphony.module.sitemesh.Page;
-import com.opensymphony.module.sitemesh.mapper.AbstractDecoratorMapper;
 
 import jakarta.servlet.http.HttpServletRequest;
 
