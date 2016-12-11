@@ -224,7 +224,7 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.hazendaz</groupId>
+            <groupId>org.sitemesh</groupId>
             <artifactId>sitemesh</artifactId>
             <scope>compile</scope>
         </dependency>
