@@ -11,7 +11,7 @@
     PURPOSE.
 
 -->
-<sitemesh xmlns="http://www.sitemesh.org/schema/sitemesh-config">
+<sitemesh xmlns="http://www.sitemesh.org/schema/sitemesh-config" include-error-pages="false">
     <property name="decorators-file" value="/WEB-INF/decorators.xml" />
     <excludes file="${decorators-file}" />
 
