@@ -191,8 +191,8 @@
         <oshi.version>7.3.0</oshi.version>
         <quartz.version>2.5.2</quartz.version>
         <servlet-api.version>6.1.0</servlet-api.version>
-        <sitemesh.version>2.6.2</sitemesh.version>
-        <slf4j.version>2.0.18</slf4j.version>
+        <sitemesh.version>3.2.2</sitemesh.version>
+        <slf4j.version>2.0.17</slf4j.version>
         <spotbugs.version>4.10.2</spotbugs.version>
         <spring.version>7.0.8</spring.version>
         <spring-security.version>6.5.11</spring-security.version>
@@ -573,7 +573,7 @@
 
             <!-- XML -->
             <dependency>
-                <groupId>com.github.hazendaz</groupId>
+                <groupId>org.sitemesh</groupId>
                 <artifactId>sitemesh</artifactId>
                 <version>${sitemesh.version}</version>
             </dependency>

@@ -24,6 +24,7 @@ import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.sitemesh.config.ConfigurableSiteMeshFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -69,7 +70,7 @@ public class ProbeInitializer implements WebApplicationInitializer {
 
     // Set sitemesh filter
     FilterRegistration.Dynamic sitemesh =
-        servletContext.addFilter("sitemesh", SiteMeshFilter.class);
+        servletContext.addFilter("sitemesh", ConfigurableSiteMeshFilter.class);
     sitemesh.addMappingForUrlPatterns(
         EnumSet.of(DispatcherType.FORWARD, DispatcherType.REQUEST, DispatcherType.ERROR), false,
         "/*");
