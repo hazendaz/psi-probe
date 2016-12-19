@@ -42,22 +42,11 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
    */
   public LogbackAccessFactoryAccessor(ClassLoader cl) throws ClassNotFoundException,
       IllegalAccessException, InvocationTargetException {
-
-    // Get the singleton SLF4J binding, which may or may not be Logback, depending on the binding.
-    Class<?> clazz = cl.loadClass("ch.qos.logback.access.tomcat.LogbackValve");
-    Method getSingleton = MethodUtils.getAccessibleMethod(clazz, "getSingleton", new Class[0]);
-    Object singleton = getSingleton.invoke(null);
-    Method getLoggerFactory = MethodUtils
-        .getAccessibleMethod(clazz, "getLoggerFactory", new Class[0]);
-
-    Object loggerFactory = getLoggerFactory.invoke(singleton);
-
-    // Check if the binding is indeed Logback
+    // Check if Logback Access exists
     Class<?> loggerFactoryClass = cl.loadClass("ch.qos.logback.access.spi.AccessContext");
-    if (!loggerFactoryClass.isInstance(loggerFactory)) {
-      throw new RuntimeException("The singleton SLF4J binding was not Logback");
+    if (loggerFactoryClass != null) {
+      setTarget(loggerFactoryClass);
     }
-    setTarget(loggerFactory);
   }
 
   /**
