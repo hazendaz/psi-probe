@@ -86,10 +86,10 @@ public class ClusterWrapperBean {
           JmxTools.getLongAttr(mbeanServer, receiverOName, "nrOfMsgsReceived"));
       cluster.setTotalReceivedBytes(
           JmxTools.getLongAttr(mbeanServer, receiverOName, "totalReceivedBytes"));
-      // cluster.setTcpSelectorTimeout(
-      // JmxTools.getLongAttr(mbeanServer, receiverOName, "tcpSelectorTimeout"));
-      // cluster.setTcpThreadCount(
-      // JmxTools.getIntAttr(mbeanServer, receiverOName, "tcpThreadCount"));
+      cluster.setTcpSelectorTimeout(
+          JmxTools.getLongAttr(mbeanServer, receiverOName, "tcpSelectorTimeout"));
+      cluster.setTcpThreadCount(
+          JmxTools.getIntAttr(mbeanServer, receiverOName, "tcpThreadCount"));
 
       cluster.setSenderAckTimeout(JmxTools.getLongAttr(mbeanServer, senderOName, "ackTimeout"));
       cluster.setSenderAutoConnect((Boolean) mbeanServer.getAttribute(senderOName, "autoConnect"));
