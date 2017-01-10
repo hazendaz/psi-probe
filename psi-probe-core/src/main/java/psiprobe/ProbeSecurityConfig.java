@@ -30,6 +30,8 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -320,6 +322,16 @@ public class ProbeSecurityConfig {
     xstream.allowTypesByWildcard(new String[] {"org.jfree.data.xy.**", "psiprobe.controllers.**",
         "psiprobe.model.**", "psiprobe.model.stats.**"});
     return xstream;
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.sessionManagement().disable();
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.debug(true);
   }
 
 }
