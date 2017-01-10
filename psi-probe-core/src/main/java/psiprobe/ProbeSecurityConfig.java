@@ -24,6 +24,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.web.DefaultSecurityFilterChain;
@@ -288,6 +290,16 @@ public class ProbeSecurityConfig {
         "psiprobe.model.**", "psiprobe.model.stats.**"});
 
     return xstream;
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.sessionManagement().disable();
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.debug(true);
   }
 
 }
