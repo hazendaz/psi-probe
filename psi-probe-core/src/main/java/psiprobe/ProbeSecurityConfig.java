@@ -26,6 +26,8 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
@@ -292,6 +294,16 @@ public class ProbeSecurityConfig extends WebSecurityConfigurerAdapter {
     XStream xstream = new XStream();
     XStream.setupDefaultSecurity(xstream);
     return xstream;
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.sessionManagement().disable();
+  }
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.debug(true);
   }
 
 }
