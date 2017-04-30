@@ -20,7 +20,10 @@
 		<title><spring:message code="probe.jsp.title.wrapper"/></title>
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/behaviour.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+		<script>
+			jQuery.noConflict();
+		</script>
 	</head>
 
 	<c:set var="navTabSystem" value="active" scope="request"/>
@@ -110,7 +113,7 @@
 
 					}
 				}
-				Behaviour.register(rules);
+				jQuery(document).ready(rules);
 			</script>
 		</c:otherwise>
 	</c:choose>

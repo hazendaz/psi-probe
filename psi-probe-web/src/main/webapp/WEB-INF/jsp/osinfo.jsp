@@ -21,7 +21,10 @@
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/behaviour.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>'/>"></script>
+		<script>
+			jQuery.noConflict();
+		</script>
 	</head>
 
 	<c:set var="navTabSystem" value="active" scope="request"/>
@@ -243,7 +246,7 @@
 						}
 					}
 
-					Behaviour.register(rules);
+					jQuery(document).ready(rules);
 
 					new Ajax.ImgUpdater('cpu_chart', '${probe:max(collectionPeriod, 5)}');
 					new Ajax.ImgUpdater('mem_chart', '${probe:max(collectionPeriod, 5)}');

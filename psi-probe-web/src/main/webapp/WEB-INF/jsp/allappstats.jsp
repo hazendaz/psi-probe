@@ -23,7 +23,10 @@
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/behaviour.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+		<script>
+			jQuery.noConflict();
+		</script>
 	</head>
 
 	<c:set var="navTabApps" value="active" scope="request"/>
@@ -250,7 +253,7 @@
 				}
 			}
 
-			Behaviour.register(rules);
+			jQuery(document).ready(rules);
 
 			imageUpdaters[0] = new Ajax.ImgUpdater('total_avg_proc_time_chart', '${probe:max(collectionPeriod, 5)}');
 			imageUpdaters[1] = new Ajax.ImgUpdater('all_app_avg_proc_time_chart', '${probe:max(collectionPeriod, 5)}');

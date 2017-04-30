@@ -24,7 +24,10 @@
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/Tooltip.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/behaviour.js'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+		<script>
+			jQuery.noConflict();
+		</script>
 		<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
 	</head>
 
@@ -379,7 +382,7 @@
 					}
 				}
 			}
-			Behaviour.register(rules);
+			jQuery(document).ready(rules);
 		</script>
 
 	</body>
