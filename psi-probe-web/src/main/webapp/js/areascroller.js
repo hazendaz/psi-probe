@@ -111,5 +111,5 @@ function setupScrollers(container) {
         }
     }
 
-    Behaviour.register(r);
+    jQuery(document).ready(r);
 }
