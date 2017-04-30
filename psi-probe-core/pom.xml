@@ -142,11 +142,6 @@
 
         <!-- misc -->
         <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.codelibs</groupId>
             <artifactId>jhighlight</artifactId>
             <scope>compile</scope>
@@ -219,11 +214,6 @@
         </dependency>
 
         <!-- Spring -->
-        <dependency>
-            <groupId>xpp3</groupId>
-            <artifactId>xpp3_min</artifactId>
-            <scope>compile</scope>
-        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>

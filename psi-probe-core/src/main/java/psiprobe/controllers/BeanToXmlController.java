@@ -10,11 +10,11 @@
  */
 package psiprobe.controllers;
 
-import com.thoughtworks.xstream.XStream;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,10 +32,6 @@ public class BeanToXmlController extends AbstractController {
 
   /** The xml marker. */
   private String xmlMarker;
-
-  /** The xstream. */
-  @Inject
-  private XStream xstream;
 
   /**
    * Gets the xml marker.
@@ -76,7 +72,9 @@ public class BeanToXmlController extends AbstractController {
       if (modelAndView.getModel() != null) {
         TransportableModel tm = new TransportableModel();
         tm.putAll(modelAndView.getModel());
-        xstream.toXML(tm, response.getWriter());
+        JAXBContext jaxbContext = JAXBContext.newInstance(TransportableModel.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.marshal(tm, response.getWriter());
       }
     }
     return null;

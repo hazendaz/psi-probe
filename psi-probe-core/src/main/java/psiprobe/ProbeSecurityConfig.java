@@ -10,8 +10,6 @@
  */
 package psiprobe;
 
-import com.thoughtworks.xstream.XStream;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -280,18 +278,6 @@ public class ProbeSecurityConfig extends WebSecurityConfigurerAdapter {
     HttpSessionRequestCache cache = new HttpSessionRequestCache();
     cache.setCreateSessionAllowed(false);
     return cache;
-  }
-
-  /**
-   * Gets the xstream.
-   *
-   * @return the xstream
-   */
-  @Bean(name = "xstream")
-  public XStream getXstream() {
-    XStream xstream = new XStream();
-    XStream.setupDefaultSecurity(xstream);
-    return xstream;
   }
 
 }

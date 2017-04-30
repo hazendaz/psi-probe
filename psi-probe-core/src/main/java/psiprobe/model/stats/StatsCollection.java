@@ -10,8 +10,6 @@
  */
 package psiprobe.model.stats;
 
-import com.thoughtworks.xstream.XStream;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +25,9 @@ import java.util.Map.Entry;
 import java.util.TreeMap;
 
 import javax.inject.Inject;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.jfree.data.xy.XYDataItem;
 import org.slf4j.Logger;
@@ -50,10 +51,6 @@ public class StatsCollection implements InitializingBean, DisposableBean, Applic
 
   /** The stats data. */
   private Map<String, List<XYDataItem>> statsData = new TreeMap<>();
-
-  /** The xstream. */
-  @Inject
-  private XStream xstream;
 
   /** The swap file name. */
   private String swapFileName;
@@ -257,7 +254,9 @@ public class StatsCollection implements InitializingBean, DisposableBean, Applic
     try {
       shiftFiles(0);
       try (OutputStream os = Files.newOutputStream(makeFile().toPath())) {
-        xstream.toXML(statsData, os);
+        JAXBContext jaxbContext = JAXBContext.newInstance(Map.class);
+        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+        jaxbMarshaller.marshal(statsData, os);
       }
     } catch (Exception e) {
       logger.error("Could not write stats data to '{}'", makeFile().getAbsolutePath(), e);
@@ -279,8 +278,10 @@ public class StatsCollection implements InitializingBean, DisposableBean, Applic
     if (file.exists() && file.canRead()) {
       long start = System.currentTimeMillis();
       try {
-        try (InputStream fis = Files.newInputStream(file.toPath())) {
-          stats = (Map<String, List<XYDataItem>>) (new XStream().fromXML(fis));
+        try (InputStream is = Files.newInputStream(file.toPath())) {
+          JAXBContext jaxbContext = JAXBContext.newInstance(Map.class);
+          Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+          stats = (Map<String, List<XYDataItem>>) jaxbUnmarshaller.unmarshal(is);
 
           if (stats != null) {
             // adjust stats data so that charts look realistic.
