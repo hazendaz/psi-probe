@@ -154,11 +154,6 @@
 
         <!-- misc -->
         <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
             <groupId>org.codelibs</groupId>
             <artifactId>jhighlight</artifactId>
             <scope>compile</scope>
