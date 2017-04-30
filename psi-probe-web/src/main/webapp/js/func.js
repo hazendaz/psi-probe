@@ -160,7 +160,7 @@ function setupHelpToggle(url) {
             }
         }
     }
-    Behaviour.register(rules);
+    jQuery(document).ready(rules);
 }
 
 function addAjaxTooltip(activator, tooltip, url) {
