@@ -10,11 +10,6 @@
  */
 package psiprobe;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.security.NoTypePermission;
-import com.thoughtworks.xstream.security.NullPermission;
-import com.thoughtworks.xstream.security.PrimitiveTypePermission;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -299,27 +294,6 @@ public class ProbeSecurityConfig {
     HttpSessionRequestCache cache = new HttpSessionRequestCache();
     cache.setCreateSessionAllowed(false);
     return cache;
-  }
-
-  /**
-   * Gets the xstream.
-   *
-   * @return the xstream
-   */
-  @Bean(name = "xstream")
-  public XStream getXstream() {
-    XStream xstream = new XStream();
-    // clear out existing permissions and start a whitelist
-    xstream.addPermission(NoTypePermission.NONE);
-    // allow some basics
-    xstream.addPermission(NullPermission.NULL);
-    xstream.addPermission(PrimitiveTypePermission.PRIMITIVES);
-    xstream.allowTypeHierarchy(Collection.class);
-    xstream.allowTypeHierarchy(String.class);
-    xstream.allowTypeHierarchy(TreeMap.class);
-    xstream.allowTypesByWildcard(new String[] {"org.jfree.data.xy.**", "psiprobe.controllers.**",
-        "psiprobe.model.**", "psiprobe.model.stats.**"});
-    return xstream;
   }
 
 }
