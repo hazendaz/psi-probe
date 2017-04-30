@@ -10,11 +10,6 @@
  */
 package psiprobe;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.security.NoTypePermission;
-import com.thoughtworks.xstream.security.NullPermission;
-import com.thoughtworks.xstream.security.PrimitiveTypePermission;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -263,31 +258,6 @@ public class ProbeSecurityConfig {
         "ROLE_MANAGER", "ROLE_MANAGER-GUI");
 
     return manager.build();
-  }
-
-  /**
-   * Gets the XStream.
-   *
-   * @return the XStream
-   */
-  @Bean(name = "xstream")
-  public XStream getXstream() {
-    XStream xstream = new XStream();
-
-    // Clear out existing permissions and start a whitelist.
-    xstream.addPermission(NoTypePermission.NONE);
-
-    // Allow some basics.
-    xstream.addPermission(NullPermission.NULL);
-    xstream.addPermission(PrimitiveTypePermission.PRIMITIVES);
-    xstream.allowTypeHierarchy(Collection.class);
-    xstream.allowTypeHierarchy(String.class);
-    xstream.allowTypeHierarchy(TreeMap.class);
-
-    xstream.allowTypesByWildcard(new String[] {"org.jfree.data.xy.**", "psiprobe.controllers.**",
-        "psiprobe.model.**", "psiprobe.model.stats.**"});
-
-    return xstream;
   }
 
 }
