@@ -96,7 +96,7 @@ function setupAjaxActions(aConnectUrl, aRecordsetUrl, aQueryHistoryUrl) {
         }
     }
 
-    Behaviour.register(rules);
+    jQuery(document).ready(rules);
 }
 
 function testConnction() {
@@ -305,7 +305,7 @@ function setupShortcuts() {
         }
     };
 
-    Behaviour.register(rules);
+    jQuery(document).ready(rules);
 }
 
 /*

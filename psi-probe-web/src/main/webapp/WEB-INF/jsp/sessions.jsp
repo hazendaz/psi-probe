@@ -35,7 +35,10 @@
         <script src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
         <script src="<c:url value='/js/Tooltip.js'/>"></script>
         <script src="<c:url value='/js/func.js'/>"></script>
-        <script src="<c:url value='/js/behaviour.js'/>"></script>
+        <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+        <script>
+            jQuery.noConflict();
+        </script>
     </head>
 
     <body>
@@ -337,7 +340,7 @@
                     }
                 }
             }
-            Behaviour.register(rules);
+            jQuery(document).ready(rules);
 
             setupHelpToggle('<c:url value="/help/sessionsearch.ajax"/>');
 
