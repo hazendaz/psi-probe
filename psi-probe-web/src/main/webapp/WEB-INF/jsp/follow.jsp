@@ -26,7 +26,10 @@
         <script src="<c:url value='/js/prototype.js'/>"></script>
         <script src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
         <script src="<c:url value='/js/func.js'/>"></script>
-        <script src="<c:url value='/js/behaviour.js'/>"></script>
+        <script src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+        <script>
+            jQuery.noConflict();
+        </script>
     </head>
 
     <c:set var="navTabLogs" value="active" scope="request"/>
@@ -379,6 +382,8 @@
                         return false;
                     }
                 }
+            }
+            jQuery(document).ready(rules);
 
             }
             Behaviour.register(rules);
