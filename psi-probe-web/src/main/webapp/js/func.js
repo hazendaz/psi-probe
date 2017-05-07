@@ -29,8 +29,8 @@ function checkAll($f) {
 /**
  * Requires prototype.js (http://www.prototypejs.org/)
  */
-Ajax.ImgUpdater = Class.create();
-Ajax.ImgUpdater.prototype = {
+$.ajax.ImgUpdater = Class.create();
+$.ajax.ImgUpdater.prototype = {
     initialize: function(imgID, timeout, newSrc) {
         this.img = document.getElementById(imgID);
         if (newSrc) {
@@ -56,9 +56,9 @@ Ajax.ImgUpdater.prototype = {
 }
 
 function togglePanel(container, remember_url) {
-    if (Element.getStyle(container, "display") == 'none') {
+    if (Element.css(container, "display") == 'none') {
         if (remember_url) {
-            new Ajax.Request(remember_url, {
+            new $.ajax.Request(remember_url, {
                 method:'get',
                 asynchronous:true,
                 parameters: 'state=on'
@@ -74,7 +74,7 @@ function togglePanel(container, remember_url) {
         Effect.Grow(container);
     } else {
         if (remember_url) {
-            new Ajax.Request(remember_url, {
+            new $.ajax.Request(remember_url, {
                 method:'get',
                 asynchronous:true,
                 parameters: 'state=off'
@@ -95,22 +95,17 @@ function scaleImage(v, minX, maxX, minY, maxY) {
     let images = document.getElementsByClassName('scale-image');
     let w = (maxX - minX) * v + minX;
     let h = (maxY - minY) * v + minY;
-    if(v > 0.8) {
-        w = w -30;
-        h = h - 100;
-    }
     for (const element of images) {
-        $(element).setStyle({
+        $(element).css({
             "width": w + 'px',
             "height": h + 'px'
         });
     }
-    return v;
 }
 
 function toggleAndReloadPanel(container, url) {
-    if (Element.getStyle(container, "display") == 'none') {
-        new Ajax.Updater(container, url);
+    if (Element.css(container, "display") == 'none') {
+        new $.ajax.Updater(container, url);
         Effect.BlindDown(container);
     } else {
         Effect.Shrink(container);
@@ -131,12 +126,12 @@ function getWindowHeight() {
 
 function getWindowWidth() {
     let myWidth = 0;
-    if (typeof( document.body.clientWidth ) == 'number') {
+    if (typeof( window.innerWidth ) == 'number') {
         //Non-IE
-        myWidth = document.body.clientWidth;
-    } else if (document.body && document.body.clientWidth) {
+        myWidth = window.innerWidth;
+    } else if (document.documentElement && document.documentElement.clientWidth) {
         //IE 6+ in 'standards compliant mode'
-        myWidth = document.body.clientWidth;
+        myWidth = document.documentElement.clientWidth;
     }
     return myWidth;
 }
@@ -148,8 +143,8 @@ function setupHelpToggle(url) {
         'li#abbreviations': function(element) {
             element.onclick = function() {
                 let help_container = 'help';
-                if (Element.getStyle(help_container, "display") == 'none') {
-                    new Ajax.Updater(help_container, url);
+                if (Element.css(help_container, "display") == 'none') {
+                    new $.ajax.Updater(help_container, url);
                 }
                 Effect.toggle(help_container, 'appear');
                 if (helpTimerID) {
@@ -160,7 +155,8 @@ function setupHelpToggle(url) {
             }
         }
     }
-    jQuery(document).ready(rules);
+    jQuery.behavior(rules)
+    jQuery(document).ready();
 }
 
 function addAjaxTooltip(activator, tooltip, url) {
@@ -173,10 +169,10 @@ function addAjaxTooltip(activator, tooltip, url) {
     }
 
     Tooltip.add(activator, tooltip);
-    let tt_container = $$('#' + tooltip + ' .tt_content')[0];
-    Event.observe(activator, 'click', function(e) {
+    let tt_container = $('#' + tooltip + ' .tt_content')[0];
+    Event.bind(activator, 'click', function(e) {
 
-        let t_title = $('tt_title');
+        let t_title = $('#tt_title');
 
         if (t_title) {
             t_title.hide();
@@ -185,12 +181,12 @@ function addAjaxTooltip(activator, tooltip, url) {
         tt_container.style.width = '300px';
 
         tt_container.innerHTML = '<div class="ajax_activity">&nbsp;</div>';
-        new Ajax.Updater(tt_container, url, {
+        new $.ajax.Updater(tt_container, url, {
             method: 'get',
             onComplete: function() {
                 tt_container.style.width = null;
-                let the_title = $('tooltip_title');
-                t_title = $('tt_title');
+                let the_title = $('#tooltip_title');
+                t_title = $('#tt_title');
 
                 if (the_title && t_title) {
                     the_title.hide();
