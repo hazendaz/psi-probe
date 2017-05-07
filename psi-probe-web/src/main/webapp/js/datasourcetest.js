@@ -41,62 +41,63 @@ function setupAjaxActions(aConnectUrl, aRecordsetUrl, aQueryHistoryUrl) {
         'li#connect': function(element) {
             element.onclick = function() {
                 testConnction();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#executeSql': function(element) {
             element.onclick = function() {
                 executeSql();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#showHistory': function(element) {
             element.onclick = function() {
                 showQueryHistory();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#hideHistory': function(element) {
             element.onclick = function() {
                 hideQueryHistory();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#showOptions': function(element) {
             element.onclick = function() {
                 showOptions();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#hideOptions': function(element) {
             element.onclick = function() {
                 hideOptions();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#wrap': function(element) {
             element.onclick = function() {
                 wrapQueryHistory();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         },
         'li#nowrap': function(element) {
             element.onclick = function() {
                 nowrapQueryHistory();
-                $('sql').focus();
+                $('#sql').focus();
                 return false;
             }
         }
     }
 
-    jQuery(document).ready(rules);
+    jQuery.behavior(rules)
+    jQuery(document).ready();
 }
 
 function testConnction() {
@@ -104,9 +105,9 @@ function testConnction() {
     Element.show(ajaxActivityId);
     Element.hide(resultsH3Id);
     Element.show(metaDataH3Id);
-    $('rowsAffected').innerHTML = "";
-    $('pagebanner').innerHTML = "";
-    $('pagelinks').innerHTML = "";
+    $('#rowsAffected').html("");
+    $('#pagebanner').html("");
+    $('#pagelinks').html("");
     var params = Form.serialize(formId);
     new Ajax.Updater(sqlOutputDivId, connectUrl, {
         method: 'post',
@@ -114,7 +115,7 @@ function testConnction() {
         onComplete: function(req, obj) {
             if (ajaxActivityTimer) clearTimeout(ajaxActivityTimer);
             ajaxActivityTimer = setTimeout('Element.hide("' + ajaxActivityId + '")', 250);
-            $('sqlResultsWrapper').show();
+            $('#sqlResultsWrapper').show();
         }
     });
 }
@@ -130,32 +131,32 @@ function executeSql() {
         postBody: params,
         onComplete: function() {
             setupPaginationLinks();
-            if ($('rs_empty') || $('rs_error')) {
-                $('left_scroller').hide();
-                $('right_scroller').hide();
-                $('separator').hide();
+            if ($('#rs_empty') || $('#rs_error')) {
+                $('#left_scroller').hide();
+                $('#right_scroller').hide();
+                $('#separator').hide();
             } else {
-                $('left_scroller').show();
-                $('right_scroller').show();
-                $('separator').show();
+                $('#left_scroller').show();
+                $('#right_scroller').show();
+                $('#separator').show();
             }
-            $('sqlResultsWrapper').show();
+            $('#sqlResultsWrapper').show();
         }
     });
 }
 
 function setupPaginationLinks(req, obj) {
-    if ($('rs_rowsAffected') && $('rs_pagebanner') && $('rs_pagelinks')) {
-        $('rowsAffected').innerHTML = $('rs_rowsAffected').innerHTML;
-        $('pagebanner').innerHTML = $('rs_pagebanner').innerHTML;
-        $('pagelinks').innerHTML = $('rs_pagelinks').innerHTML;
+    if ($('#rs_rowsAffected') && $('#rs_pagebanner') && $('#rs_pagelinks')) {
+        $('#rowsAffected').html($('#rs_rowsAffected').html());
+        $('#pagebanner').html($('#rs_pagebanner').html());
+        $('#pagelinks').html($('#rs_pagelinks').html());
     } else {
-        $('rowsAffected').innerHTML = "";
-        $('pagebanner').innerHTML = "";
-        $('pagelinks').innerHTML = "";
+        $('#rowsAffected').html("");
+        $('#pagebanner').html("");
+        $('#pagelinks').html("");
     }
 
-    var links = $$('#pagelinks a');
+    var links = $('#pagelinks a');
 
     links.each(function(lnk) {
         lnk.onclick = function() {
@@ -185,7 +186,7 @@ function showQueryHistory() {
         onComplete: function(req, obj) {
             Element.hide('showHistory');
             Element.show('hideHistory');
-            Element.setStyle(historyOutputDivId, {
+            Element.css(historyOutputDivId, {
                 height: historyHeight + 'px'
             });
             Effect.Appear(historyContainerDivId, {
@@ -207,12 +208,12 @@ function getQueryHistoryItem(lnk) {
     new Ajax.Request(lnk.href, {
         method: 'get',
         onComplete: function(lnkReq) {
-            $('sql').value = lnkReq.responseText;
+            $('#sql').value = lnkReq.responseText;
         }
     });
 
 hideQueryHistory();
-$('sql').focus();
+$('#sql').focus();
 }
 
 function hideQueryHistory() {
@@ -225,7 +226,7 @@ function hideQueryHistory() {
 }
 
 function wrapQueryHistory() {
-    Element.setStyle(historyOutputDivId, {
+    Element.css(historyOutputDivId, {
         "whiteSpace": "normal"
     });
     Element.hide('wrap');
@@ -234,7 +235,7 @@ function wrapQueryHistory() {
 }
 
 function nowrapQueryHistory() {
-    Element.setStyle(historyOutputDivId, {
+    Element.css(historyOutputDivId, {
         "whiteSpace": "nowrap"
     });
     Element.hide('nowrap');
@@ -284,28 +285,29 @@ function setupShortcuts() {
 
                 if (e.keyCode == 13 && e.ctrlKey && ! e.altKey && ! e.shiftKey) {
                     executeSql();
-                    $('sql').focus();
+                    $('#sql').focus();
                 } else if (e.keyCode == 40 && e.ctrlKey && ! e.altKey && ! e.shiftKey) {
                     if (historyVisible) {
                         hideQueryHistory();
                     } else {
                         showQueryHistory();
                     }
-                    $('sql').focus();
+                    $('#sql').focus();
                 } else if (e.keyCode == 38 && e.ctrlKey && ! e.altKey && ! e.shiftKey) {
                     if (optionsVisible) {
                         hideOptions();
-                        $('sql').focus();
+                        $('#sql').focus();
                     } else {
                         showOptions();
-                        $('sql').focus();
+                        $('#sql').focus();
                     }
                 }
             }
         }
     };
 
-    jQuery(document).ready(rules);
+    jQuery.behavior(rules)
+    jQuery(document).ready();
 }
 
 /*
@@ -316,7 +318,7 @@ function resizeTextArea(drag) {
     var deltaY = drag.currentDelta()[1];
     var h = (Element.getDimensions('sql').height + deltaY);
     h = Math.max(h, 100);
-    Element.setStyle('sql', {
+    Element.css('sql', {
         height: h + 'px'
     });
 }
@@ -326,7 +328,7 @@ function resizeQueryHistory(drag) {
     var h = (Element.getDimensions(historyOutputDivId).height + deltaY);
     h = Math.max(h, 20);
     historyHeight = h;
-    Element.setStyle(historyOutputDivId, {
+    Element.css(historyOutputDivId, {
         height: h + 'px'
     });
 }
@@ -334,5 +336,5 @@ function resizeQueryHistory(drag) {
 function revertDragHandle(handle) {
     handle.style.top = 0;
     handle.style.position = 'relative';
-    $('sql').focus();
+    $('#sql').focus();
 }
