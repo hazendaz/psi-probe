@@ -21,7 +21,9 @@
 		<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 		<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
-		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>'/>"></script>
+		<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
+        <script type="text/javascript" src="<c:url value='/js/jquery-livequery.js'/>"/></script>
+        <script type="text/javascript" src="<c:url value='/js/jquery-behavior.js'/>"/></script>
 		<script>
 			jQuery.noConflict();
 		</script>
@@ -246,7 +248,8 @@
 						}
 					}
 
-					jQuery(document).ready(rules);
+                    jQuery.behavior(rules)
+                    jQuery(document).ready();
 
 					new Ajax.ImgUpdater('cpu_chart', '${probe:max(collectionPeriod, 5)}');
 					new Ajax.ImgUpdater('mem_chart', '${probe:max(collectionPeriod, 5)}');

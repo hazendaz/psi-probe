@@ -38,13 +38,10 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<script type="text/javascript" src="<c:url value='/js/prototype.js'/>"></script>
-				<script type="text/javascript" src="<c:url value='/js/scriptaculous/scriptaculous.js'/>"></script>
 				<script type="text/javascript" src="<c:url value='/js/func.js'/>"></script>
 				<script type="text/javascript" src="<c:url value='/js/jquery-3.2.1.min.js'/>"/></script>
-				<script>
-					jQuery.noConflict();
-				</script>
+                <script type="text/javascript" src="<c:url value='/js/jquery-livequery.js'/>"/></script>
+                <script type="text/javascript" src="<c:url value='/js/jquery-behavior.js'/>"/></script>
 
 				<c:set var="confirmMessage">
 					<spring:message htmlEscape="true" code="probe.jsp.app.summary.undeploy.confirm" arguments="${param.webapp}"/>
@@ -283,7 +280,8 @@
 							}
 						}
 
-						jQuery(document).ready(rules);
+				        $.behavior(rules)
+						$(document).ready();
 
 						imageUpdaters[0] = new Ajax.ImgUpdater('req_chart', '${probe:max(collectionPeriod, 5)}');
 						imageUpdaters[1] = new Ajax.ImgUpdater('avg_proc_time_chart', '${probe:max(collectionPeriod, 5)}');
