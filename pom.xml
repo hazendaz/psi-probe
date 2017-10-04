@@ -448,6 +448,13 @@
                 <version>${vibur-dbcp.version}</version>
             </dependency>
 
+            <!-- Classloader leak prevention -->
+            <dependency>
+                <groupId>se.jiderhamn.classloader-leak-prevention</groupId>
+                <artifactId>classloader-leak-prevention-servlet3</artifactId>
+                <version>${classloader-leak-prevention.version}</version>
+            </dependency>
+
             <!-- Guava -->
             <dependency>
                 <groupId>com.google.guava</groupId>
