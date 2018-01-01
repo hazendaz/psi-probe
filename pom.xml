@@ -190,6 +190,7 @@
         <mockito.version>5.23.0</mockito.version>
         <ojdbc.version>19.32.0.0</ojdbc.version>
         <oshi.version>7.6.1</oshi.version>
+        <orsoncharts.version>1.7</orsoncharts.version>
         <quartz.version>2.5.2</quartz.version>
         <servlet-api.version>6.1.0</servlet-api.version>
         <sitemesh.version>2.7.0</sitemesh.version>
@@ -601,6 +602,11 @@
                 <groupId>org.jfree</groupId>
                 <artifactId>jfreechart</artifactId>
                 <version>${jfreechart.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.object-refinery</groupId>
+                <artifactId>orsoncharts</artifactId>
+                <version>${orsoncharts.version}</version>
             </dependency>
 
             <!-- Tanuki Wrapper -->
