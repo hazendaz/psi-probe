@@ -20,7 +20,7 @@ import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.controllers.AbstractTomcatContainerController;
@@ -34,7 +34,7 @@ import psiprobe.tools.SecurityUtils;
 @Controller
 public class ListWebappsController extends AbstractTomcatContainerController {
 
-  @RequestMapping(path = "/index.htm")
+  @GetMapping(path = "/index.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.tools.logging.LogDestination;
@@ -29,7 +29,7 @@ import psiprobe.tools.logging.LogDestination;
 @Controller
 public class SetupFollowController extends AbstractLogHandlerController {
 
-  @RequestMapping(path = "/follow.htm")
+  @GetMapping(path = "/follow.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

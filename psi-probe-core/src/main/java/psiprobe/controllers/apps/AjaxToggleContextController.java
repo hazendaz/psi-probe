@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.controllers.AbstractContextHandlerController;
@@ -34,7 +34,7 @@ public class AjaxToggleContextController extends AbstractContextHandlerControlle
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(AjaxToggleContextController.class);
 
-  @RequestMapping(path = "/app/toggle.ajax")
+  @GetMapping(path = "/app/toggle.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
