@@ -24,7 +24,7 @@ import javax.management.openmbean.CompositeData;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -38,7 +38,7 @@ import psiprobe.tools.JmxTools;
 @Controller
 public class ListSunThreadsController extends ParameterizableViewController {
 
-  @RequestMapping(path = "/th_impl2.htm")
+  @GetMapping(path = "/th_impl2.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
