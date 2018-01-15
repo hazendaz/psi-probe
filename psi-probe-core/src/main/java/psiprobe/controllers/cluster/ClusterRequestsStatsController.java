@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -30,7 +30,7 @@ public class ClusterRequestsStatsController extends BaseClusterStatsController {
     super.setLoadMembers(loadMembers);
   }
 
-  @RequestMapping(path = "/cluster/requests.ajax")
+  @GetMapping(path = "/cluster/requests.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
