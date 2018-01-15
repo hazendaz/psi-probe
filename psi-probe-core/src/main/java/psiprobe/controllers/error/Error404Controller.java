@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 @Controller
 public class Error404Controller extends ParameterizableViewController {
 
-  @RequestMapping(path = "/404.htm")
+  @GetMapping(path = "/404.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
