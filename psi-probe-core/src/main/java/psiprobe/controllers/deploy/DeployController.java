@@ -24,6 +24,7 @@ import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.controllers.AbstractTomcatContainerController;
@@ -34,7 +35,7 @@ import psiprobe.controllers.AbstractTomcatContainerController;
 @Controller
 public class DeployController extends AbstractTomcatContainerController {
 
-  @RequestMapping(path = "/adm/deploy.htm")
+  @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST}, path = "/adm/deploy.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

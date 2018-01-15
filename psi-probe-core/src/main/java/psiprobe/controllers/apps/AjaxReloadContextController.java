@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.controllers.AbstractContextHandlerController;
@@ -34,7 +34,7 @@ public class AjaxReloadContextController extends AbstractContextHandlerControlle
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(AjaxReloadContextController.class);
 
-  @RequestMapping(path = "/app/reload.ajax")
+  @GetMapping(path = "/app/reload.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
