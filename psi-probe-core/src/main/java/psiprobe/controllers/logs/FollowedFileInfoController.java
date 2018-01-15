@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.tools.logging.LogDestination;
@@ -26,7 +26,7 @@ import psiprobe.tools.logging.LogDestination;
 @Controller
 public class FollowedFileInfoController extends AbstractLogHandlerController {
 
-  @RequestMapping(path = "/ff_info.ajax")
+  @GetMapping(path = "/ff_info.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
