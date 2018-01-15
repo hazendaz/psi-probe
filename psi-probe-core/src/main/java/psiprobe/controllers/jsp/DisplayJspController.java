@@ -18,7 +18,7 @@ import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -34,7 +34,7 @@ public class DisplayJspController extends AbstractContextHandlerController {
   /** The Constant SUMMARY_ATTRIBUTE. */
   public static final String SUMMARY_ATTRIBUTE = "jsp.summary";
 
-  @RequestMapping(path = "/app/jsp.htm")
+  @GetMapping(path = "/app/jsp.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

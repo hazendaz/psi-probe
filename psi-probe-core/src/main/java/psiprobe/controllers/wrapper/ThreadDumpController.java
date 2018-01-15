@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.tanukisoftware.wrapper.WrapperManager;
 
@@ -32,7 +32,7 @@ public class ThreadDumpController extends PostParameterizableViewController {
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(ThreadDumpController.class);
 
-  @RequestMapping(path = "/adm/threaddump.ajax")
+  @GetMapping(path = "/adm/threaddump.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

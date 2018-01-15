@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.tanukisoftware.wrapper.WrapperManager;
 
@@ -53,7 +53,7 @@ public class StopJvmController extends PostParameterizableViewController {
     this.stopExitCode = stopExitCode;
   }
 
-  @RequestMapping(path = "/adm/stopvm.ajax")
+  @GetMapping(path = "/adm/stopvm.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

@@ -18,7 +18,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.PostParameterizableViewController;
@@ -30,7 +30,7 @@ import psiprobe.model.sql.DataSourceTestInfo;
 @Controller
 public class QueryHistoryController extends PostParameterizableViewController {
 
-  @RequestMapping(path = "/sql/queryHistory.ajax")
+  @PostMapping(path = "/sql/queryHistory.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

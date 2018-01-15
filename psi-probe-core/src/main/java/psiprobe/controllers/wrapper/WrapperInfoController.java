@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 import org.tanukisoftware.wrapper.WrapperManager;
@@ -33,7 +33,7 @@ public class WrapperInfoController extends ParameterizableViewController {
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(WrapperInfoController.class);
 
-  @RequestMapping(path = "/wrapper.htm")
+  @GetMapping(path = "/wrapper.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
