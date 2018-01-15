@@ -38,7 +38,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceView;
 
@@ -53,7 +53,7 @@ public class CopySingleFileController extends AbstractTomcatContainerController 
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(CopySingleFileController.class);
 
-  @RequestMapping(path = "/adm/deployfile.htm")
+  @PostMapping(path = "/adm/deployfile.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

@@ -33,7 +33,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.InternalResourceView;
 
@@ -51,7 +51,7 @@ public class UploadWarController extends AbstractTomcatContainerController {
   private static final Logger logger = LoggerFactory.getLogger(UploadWarController.class);
   private static final int MAXSECONDS_WAITFOR_CONTEXT = 10;
 
-  @RequestMapping(path = "/adm/war.htm")
+  @PostMapping(path = "/adm/war.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
