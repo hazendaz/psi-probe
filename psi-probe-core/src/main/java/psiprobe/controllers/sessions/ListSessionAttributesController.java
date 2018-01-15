@@ -17,7 +17,7 @@ import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.controllers.AbstractContextHandlerController;
@@ -31,7 +31,7 @@ import psiprobe.tools.SecurityUtils;
 @Controller
 public class ListSessionAttributesController extends AbstractContextHandlerController {
 
-  @RequestMapping(path = "/attributes.htm")
+  @GetMapping(path = "/attributes.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -58,7 +58,7 @@ public class ThreadStackController extends ParameterizableViewController {
     this.stackElementCount = stackElementCount;
   }
 
-  @RequestMapping(path = "/app/threadstack.ajax")
+  @GetMapping(path = "/app/threadstack.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.tools.logging.LogDestination;
@@ -34,7 +34,7 @@ import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackAppenderAccessor;
 @Controller
 public class ChangeLogLevelController extends AbstractLogHandlerController {
 
-  @RequestMapping(path = "/adm/changeloglevel.ajax")
+  @GetMapping(path = "/adm/changeloglevel.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
