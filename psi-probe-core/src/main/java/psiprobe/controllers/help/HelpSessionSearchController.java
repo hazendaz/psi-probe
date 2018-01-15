@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.PostParameterizableViewController;
@@ -26,7 +26,7 @@ import psiprobe.PostParameterizableViewController;
 @Controller
 public class HelpSessionSearchController extends PostParameterizableViewController {
 
-  @RequestMapping(path = "/help/sessionsearch.ajax")
+  @PostMapping(path = "/help/sessionsearch.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
