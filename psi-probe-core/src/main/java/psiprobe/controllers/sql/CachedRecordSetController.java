@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.PostParameterizableViewController;
@@ -38,7 +38,7 @@ public class CachedRecordSetController extends PostParameterizableViewController
   /** The Constant logger. */
   private static final Logger logger = LoggerFactory.getLogger(CachedRecordSetController.class);
 
-  @RequestMapping(path = "/sql/cachedRecordset.ajax")
+  @PostMapping(path = "/sql/cachedRecordset.ajax")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {

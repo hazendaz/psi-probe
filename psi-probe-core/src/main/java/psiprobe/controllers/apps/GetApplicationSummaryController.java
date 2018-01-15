@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import psiprobe.tools.TimeExpression;
@@ -26,7 +26,7 @@ import psiprobe.tools.TimeExpression;
 @Controller
 public class GetApplicationSummaryController extends BaseGetApplicationController {
 
-  @RequestMapping(path = "/appsummary.htm")
+  @GetMapping(path = "/appsummary.htm")
   @Override
   public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
