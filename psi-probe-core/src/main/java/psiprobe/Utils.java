@@ -286,6 +286,7 @@ public final class Utils {
                   && "=".equals(directiveTokenizer.nextToken().getText())
                   && directiveTokenizer.hasMore()) {
                 contentType = directiveTokenizer.nextToken().getInnerText();
+                break;
               }
             }
           }
