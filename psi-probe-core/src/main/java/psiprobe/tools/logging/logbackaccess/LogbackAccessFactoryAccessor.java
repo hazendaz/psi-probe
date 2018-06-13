@@ -10,14 +10,12 @@
  */
 package psiprobe.tools.logging.logbackaccess;
 
-import org.apache.commons.beanutils.MethodUtils;
-
-import psiprobe.tools.logging.DefaultAccessor;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.lang3.reflect.MethodUtils;
+import psiprobe.tools.logging.DefaultAccessor;
 
 /**
  * Wraps a Logback logger factory from a given web application class loader.
@@ -44,7 +42,9 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
       IllegalAccessException, InvocationTargetException {
     // Check if Logback Access exists
     Class<?> loggerFactoryClass = cl.loadClass("ch.qos.logback.access.spi.AccessContext");
-    if (loggerFactoryClass != null) {
+    if (loggerFactoryClass == null) {
+      logger.info("No logback access found");
+    } else {
       setTarget(loggerFactoryClass);
     }
   }
@@ -70,7 +70,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
     try {
       Class<? extends Object> clazz = getTarget().getClass();
       Method getLogger = MethodUtils
-          .getAccessibleMethod(clazz, "getLogger", new Class[] {String.class});
+          .getAccessibleMethod(clazz, "getLogger", String.class);
 
       Object logger = getLogger.invoke(getTarget(), name);
       if (logger == null) {
@@ -96,7 +96,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
     List<LogbackAccessAppenderAccessor> appenders = new ArrayList<>();
     try {
       Class<? extends Object> clazz = getTarget().getClass();
-      Method getLoggerList = MethodUtils.getAccessibleMethod(clazz, "getLoggerList", new Class[0]);
+      Method getLoggerList = MethodUtils.getAccessibleMethod(clazz, "getLoggerList");
 
       List<Object> loggers = (List<Object>) getLoggerList.invoke(getTarget());
       for (Object logger : loggers) {
