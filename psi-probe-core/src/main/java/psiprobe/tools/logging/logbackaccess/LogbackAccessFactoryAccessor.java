@@ -96,18 +96,11 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
     List<LogbackAccessAppenderAccessor> appenders = new ArrayList<>();
     try {
       Class<? extends Object> clazz = getTarget().getClass();
-      Method getLoggerList = MethodUtils.getAccessibleMethod(clazz, "getLoggerList");
+      Method getAppender = MethodUtils.getAccessibleMethod(clazz, "getAppender", String.class);
 
-      List<Object> loggers = (List<Object>) getLoggerList.invoke(getTarget());
-      for (Object logger : loggers) {
-        LogbackAccessLoggerAccessor accessor = new LogbackAccessLoggerAccessor();
-        accessor.setTarget(logger);
-        accessor.setApplication(getApplication());
-
-        appenders.addAll(accessor.getAppenders());
-      }
+      appenders.add((LogbackAccessAppenderAccessor) getAppender.invoke(getTarget(), "ACCESS-LOG"));
     } catch (Exception e) {
-      logger.error("{}.getLoggerList() failed", getTarget(), e);
+      logger.error("{}.getAppender() failed", getTarget(), e);
     }
     return appenders;
   }
