@@ -392,6 +392,16 @@ li#viewAppFilterMaps {
     background: url( "gifs/silk/application_link.png" ) top left no-repeat;
 }
 
+li#viewAppListeners {
+    float: left;
+    background: url( "gifs/silk/application_view_list.png" ) top left no-repeat;
+}
+
+li#viewAppListenerMaps {
+    float: left;
+    background: url( "gifs/silk/application_link.png" ) top left no-repeat;
+}
+
 li#appStart {
     float: left;
     background: url( "gifs/silk/control_play_blue.png" ) top left no-repeat;
