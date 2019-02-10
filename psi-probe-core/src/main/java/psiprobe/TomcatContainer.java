@@ -212,6 +212,14 @@ public interface TomcatContainer {
   List<FilterMapping> getApplicationFilterMaps(Context context);
 
   /**
+   * Gets the application listener maps.
+   *
+   * @param context the context
+   * @return the application listener maps
+   */
+  List<FilterMapping> getApplicationListenerMaps(Context context);
+
+  /**
    * Gets the available.
    *
    * @param context the context
@@ -246,6 +254,14 @@ public interface TomcatContainer {
    * @return the application filters
    */
   List<FilterInfo> getApplicationFilters(Context context);
+
+  /**
+   * Gets the application listeners.
+   *
+   * @param context the context
+   * @return the application listeners
+   */
+  List<FilterInfo> getApplicationListeners(Context context);
 
   /**
    * Gets the application init params.
