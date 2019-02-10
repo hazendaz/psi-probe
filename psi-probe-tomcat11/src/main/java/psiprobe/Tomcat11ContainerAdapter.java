@@ -179,6 +179,60 @@ public class Tomcat11ContainerAdapter extends AbstractTomcatContainer {
     return filterDefs;
   }
 
+
+  @Override
+  public List<FilterMapping> getApplicationListenerMaps(Context context) {
+    String[] fms = context.findApplicationListeners();
+    List<FilterMapping> filterMaps = new ArrayList<>(fms.length);
+    for (FilterMap filterMap : fms) {
+      if (filterMap != null) {Add commentMore actions
+        String dm;
+        switch (filterMap.getDispatcherMapping()) {
+          case FilterMap.ASYNC:
+            dm = "ASYNC";
+            break;
+          case FilterMap.ERROR:
+            dm = "ERROR";
+            break;
+          case FilterMap.FORWARD:
+            dm = "FORWARD";
+            break;
+          case FilterMap.INCLUDE:
+            dm = "INCLUDE";
+            break;
+          case FilterMap.REQUEST:
+            dm = "REQUEST";
+            break;
+          default:
+            dm = "";
+        }
+
+        String filterClass = "";
+        FilterDef fd = context.findFilterDef(filterMap.getFilterName());
+        if (fd != null) {
+          filterClass = fd.getFilterClass();
+        }
+
+        List<FilterMapping> filterMappings = getFilterMappings(filterMap, dm, filterClass);
+        filterMaps.addAll(filterMappings);
+      }
+    }
+    return filterMaps;
+  }
+
+  @Override
+  public List<FilterInfo> getApplicationListeners(Context context) {
+    String[] fds = context.findApplicationListeners();
+    List<FilterInfo> filterDefs = new ArrayList<>(fds.length);
+    for (FilterDef filterDef : fds) {
+      if (filterDef != null) {
+        FilterInfo fi = getFilterInfo(filterDef);
+        filterDefs.add(fi);
+      }
+    }
+    return filterDefs;
+  }
+
   /**
    * Gets the filter info.
    *
