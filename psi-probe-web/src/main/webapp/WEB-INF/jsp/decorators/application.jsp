@@ -66,6 +66,11 @@
             </a>
         </li>
         <li>
+            <a class="${appTabListeners}" href="<c:url value='/applisteners.htm'><c:param name='webapp' value='${param.webapp}' /></c:url>">
+                <spring:message code="probe.jsp.app.nav.listeners"/>
+            </a>
+        </li>
+        <li>
             <a class="${appTabInitParams}" href="<c:url value='/appinitparams.htm'><c:param name='webapp' value='${param.webapp}' /></c:url>">
                 <spring:message code="probe.jsp.app.nav.initParams"/>
             </a>
