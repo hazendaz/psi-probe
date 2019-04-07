@@ -45,19 +45,26 @@ public class TomcatSlf4jLogbackFactoryAccessor extends DefaultAccessor {
       throws ClassNotFoundException, IllegalAccessException, InvocationTargetException {
 
     // Get the singleton SLF4J binding, which may or may not be Logback, depending on the binding.
-    Class<?> clazz = cl.loadClass("org.apache.juli.logging.org.slf4j.impl.StaticLoggerBinder");
-    Method getSingleton = MethodUtils.getAccessibleMethod(clazz, "getSingleton");
-    Object singleton = getSingleton.invoke(null);
-    Method getLoggerFactory = MethodUtils.getAccessibleMethod(clazz, "getLoggerFactory");
-
-    Object loggerFactory = getLoggerFactory.invoke(singleton);
-
-    // Check if the binding is indeed Logback
-    Class<?> loggerFactoryClass =
-        cl.loadClass("org.apache.juli.logging.ch.qos.logback.classic.LoggerContext");
-    if (!loggerFactoryClass.isInstance(loggerFactory)) {
-      throw new RuntimeException("The singleton SLF4J binding was not Logback");
+    Class<?> clazz;
+    Object loggerFactory;
+    Class<?> loggerFactoryClass;
+    try {
+      clazz = cl.loadClass("org.apache.juli.logging.org.slf4j.impl.StaticLoggerBinder");
+      Method getSingleton = MethodUtils.getAccessibleMethod(clazz, "getSingleton");
+      Object singleton = getSingleton.invoke(null);
+      Method getLoggerFactory = MethodUtils.getAccessibleMethod(clazz, "getLoggerFactory");
+      loggerFactory = getLoggerFactory.invoke(singleton);
+      loggerFactoryClass = cl.loadClass("org.apache.juli.logging.ch.qos.logback.classic.LoggerContext");
+      // Check if the binding is indeed Logback
+      if (!loggerFactoryClass.isInstance(loggerFactory)) {
+        throw new RuntimeException("The singleton SLF4J binding was not Logback");
+      }
+    } catch (ClassNotFoundException e) {
+      clazz = cl.loadClass("org.apache.juli.logging.ch.qos.logback.classic.spi.LogbackServiceProvider");
+      Method getLoggerFactory = MethodUtils.getAccessibleMethod(clazz, "getLoggerFactory");
+      loggerFactory = getLoggerFactory.invoke(null);
     }
+
     setTarget(loggerFactory);
   }
 
