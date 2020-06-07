@@ -17,7 +17,7 @@
     <parent>
         <groupId>com.github.psi-probe</groupId>
         <artifactId>psi-probe</artifactId>
-        <version>3.4.6-SNAPSHOT</version>
+        <version>3.5.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>psi-probe-tomcat10</artifactId>
@@ -51,7 +51,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>psi-probe-core</artifactId>
+            <artifactId>psi-probe-core-jakarta</artifactId>
             <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
