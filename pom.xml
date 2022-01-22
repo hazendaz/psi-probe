@@ -145,11 +145,11 @@
 
         <!-- Dependency Versions -->
         <activation.version>1.2.2</activation.version>
-        <assertj.version>3.21.0</assertj.version>
+        <assertj.version>3.22.0</assertj.version>
         <beanutils.version>1.9.4</beanutils.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <c3p0.version>0.9.5.5</c3p0.version>
-        <checker.version>3.21.0</checker.version>
+        <checker.version>3.21.1</checker.version>
         <collections.version>3.2.2</collections.version>
         <dbcp.version>1.4</dbcp.version>
         <dbcp2.version>2.9.0</dbcp2.version>
@@ -158,7 +158,7 @@
         <error-prone.version>2.10.0</error-prone.version>
         <geoip2.version>2.16.1</geoip2.version>
         <guava.version>31.0.1-jre</guava.version>
-        <hateoas.version>1.4.0</hateoas.version>
+        <hateoas.version>1.4.1</hateoas.version>
         <hikaricp.version>4.0.3</hikaricp.version>
         <inject.version>1.0.5</inject.version>
         <io.version>2.11.0</io.version>
@@ -175,7 +175,7 @@
         <jstl.version>1.2.6</jstl.version>
         <junit.version>5.8.2</junit.version>
         <lang3.version>3.12.0</lang3.version>
-        <logback.version>1.2.9</logback.version>
+        <logback.version>1.2.10</logback.version>
         <mail.version>1.6.7</mail.version>
         <oshi.version>5.8.6</oshi.version>
         <openejb.version>4.7.5</openejb.version>
@@ -185,12 +185,12 @@
         <quartz.version>2.3.2</quartz.version>
         <servlet-api.version>4.0.4</servlet-api.version>
         <sitemesh.version>2.4.2</sitemesh.version>
-        <slf4j.version>1.7.32</slf4j.version>
-        <spring.version>5.3.14</spring.version>
+        <slf4j.version>1.7.33</slf4j.version>
+        <spring.version>5.3.15</spring.version>
         <spring-security.version>5.6.1</spring-security.version>
         <text.version>1.9</text.version>
         <transaction-api.version>1.3.3</transaction-api.version>
-        <tomcat.version>9.0.55</tomcat.version>
+        <tomcat.version>9.0.58</tomcat.version>
         <wrapper.version>3.2.3</wrapper.version>
         <xpp3_min.version>1.1.4c</xpp3_min.version>
         <xstream.version>1.4.18</xstream.version>
@@ -199,22 +199,22 @@
         <!-- Plugin Versions -->
         <antrun.plugin>3.0.0</antrun.plugin>
         <assembly.plugin>3.3.0</assembly.plugin>
-        <build-helper.plugin>3.2.0</build-helper.plugin>
+        <build-helper.plugin>3.3.0</build-helper.plugin>
         <checkstyle.plugin>3.1.2</checkstyle.plugin>
         <changelog.plugin>2.3</changelog.plugin>
         <clean.plugin>3.1.0</clean.plugin>
-        <compiler.plugin>3.8.1</compiler.plugin>
+        <compiler.plugin>3.9.0</compiler.plugin>
         <coveralls.plugin>4.3.0</coveralls.plugin>
         <dependency.plugin>3.2.0</dependency.plugin>
-        <dependency-check.plugin>6.5.1</dependency-check.plugin>
-        <deploy.plugin>3.0.0-M1</deploy.plugin>
+        <dependency-check.plugin>6.5.3</dependency-check.plugin>
+        <deploy.plugin>3.0.0-M2</deploy.plugin>
         <formatter.plugin>2.17.1</formatter.plugin>
         <git-commit.plugin>4.9.10</git-commit.plugin>
         <gpg.plugin>3.0.1</gpg.plugin>
         <impsort.plugin>1.6.2</impsort.plugin>
         <install.plugin>3.0.0-M1</install.plugin>
         <jacoco.plugin>0.8.7</jacoco.plugin>
-        <jar.plugin>3.2.0</jar.plugin>
+        <jar.plugin>3.2.2</jar.plugin>
         <javadoc.plugin>3.3.1</javadoc.plugin>
         <jdeps.plugin>3.1.2</jdeps.plugin>
         <jspc.plugin>9.4.44.v20210927</jspc.plugin>
@@ -225,12 +225,12 @@
         <modernizer.plugin>2.3.0</modernizer.plugin>
         <pmd.plugin>3.15.0</pmd.plugin>
         <project-info.plugin>3.1.2</project-info.plugin>
-        <release.plugin>3.0.0-M4</release.plugin>
+        <release.plugin>3.0.0-M5</release.plugin>
         <resources.plugin>3.2.0</resources.plugin>
-        <site.plugin>3.9.1</site.plugin>
+        <site.plugin>3.10.0</site.plugin>
         <sonar.plugin>3.9.1.2184</sonar.plugin>
         <source.plugin>3.2.1</source.plugin>
-        <spotbugs.plugin>4.5.2.0</spotbugs.plugin>
+        <spotbugs.plugin>4.5.3.0</spotbugs.plugin>
         <surefire.plugin>3.0.0-M5</surefire.plugin>
         <tidy.plugin>1.1.0</tidy.plugin>
         <versions.plugin>2.8.1</versions.plugin>
@@ -239,7 +239,7 @@
         <!-- Plugin Dependency Versions -->
         <build-tools.version>1.2.6</build-tools.version>
         <bugpattern.version>1.5.0</bugpattern.version>
-        <checkstyle.version>9.2</checkstyle.version>
+        <checkstyle.version>9.2.1</checkstyle.version>
         <doxia.version>1.11.1</doxia.version>
         <ecj.version>3.26.0</ecj.version>
         <sb-contrib.version>7.4.7</sb-contrib.version>
@@ -248,7 +248,7 @@
         <wagon-git.version note="Do not use 2.0.4 as it does not work with ssh">2.0.3</wagon-git.version>
 
         <!-- Plugin Extensions -->
-        <wagon-ssh.version>3.5.0</wagon-ssh.version>
+        <wagon-ssh.version>3.5.1</wagon-ssh.version>
 
         <!-- Verification Checks -->
         <error-prone.failOnViolations>-XepAllErrorsAsWarnings</error-prone.failOnViolations>
