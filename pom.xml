@@ -161,7 +161,7 @@
         <bind-api.version>2.3.3</bind-api.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <c3p0.version>0.9.5.5</c3p0.version>
-        <checker.version>3.22.1</checker.version>
+        <checker.version>3.23.0</checker.version>
         <collections.version>3.2.2</collections.version>
         <dbcp.version>1.4</dbcp.version>
         <dbcp2.version>2.9.0</dbcp2.version>
@@ -170,7 +170,7 @@
         <error-prone.version>2.14.0</error-prone.version>
         <geoip2.version>2.16.1</geoip2.version>
         <guava.version>31.1-jre</guava.version>
-        <hateoas.version>1.5.0</hateoas.version>
+        <hateoas.version>1.5.1</hateoas.version>
         <hikaricp.version>4.0.3</hikaricp.version>
         <inject.version>1.0.5</inject.version>
         <io.version>2.11.0</io.version>
@@ -181,7 +181,7 @@
         <jfreechart.version>1.5.3</jfreechart.version>
         <jhighlight.version>1.1.0</jhighlight.version>
         <jmockit.version>1.49.2</jmockit.version>
-        <jna.version>5.11.0</jna.version>
+        <jna.version>5.12.1</jna.version>
         <jsp-api.version>2.3.6</jsp-api.version>
         <jstl-api.version>1.2.7</jstl-api.version>
         <jstl.version>1.2.6</jstl.version>
@@ -189,7 +189,7 @@
         <lang3.version>3.12.0</lang3.version>
         <logback.version>1.2.11</logback.version>
         <mail.version>1.6.7</mail.version>
-        <oshi.version>6.1.6</oshi.version>
+        <oshi.version>6.2.2</oshi.version>
         <openejb.version>4.7.5</openejb.version>
         <persistence.version>2.2.3</persistence.version>
         <pool.version>1.6</pool.version>
@@ -198,9 +198,9 @@
         <servlet-api.version>4.0.4</servlet-api.version>
         <sitemesh.version>2.4.2</sitemesh.version>
         <slf4j.version>1.7.36</slf4j.version>
-        <spotbugs.version>4.7.0</spotbugs.version>
-        <spring.version>5.3.20</spring.version>
-        <spring-security.version>5.7.1</spring-security.version>
+        <spotbugs.version>4.7.1</spotbugs.version>
+        <spring.version>5.3.22</spring.version>
+        <spring-security.version>5.7.2</spring-security.version>
         <text.version>1.9</text.version>
         <transaction-api.version>1.3.3</transaction-api.version>
         <tomcat.version>9.0.63</tomcat.version>
@@ -211,7 +211,7 @@
 
         <!-- Plugin Versions -->
         <antrun.plugin>3.1.0</antrun.plugin>
-        <assembly.plugin>3.3.0</assembly.plugin>
+        <assembly.plugin>3.4.2</assembly.plugin>
         <build-helper.plugin>3.3.0</build-helper.plugin>
         <checkstyle.plugin>3.1.2</checkstyle.plugin>
         <changelog.plugin>2.3</changelog.plugin>
@@ -219,44 +219,44 @@
         <compiler.plugin>3.10.1</compiler.plugin>
         <coveralls.plugin>4.4.1</coveralls.plugin>
         <dependency.plugin>3.3.0</dependency.plugin>
-        <dependency-check.plugin>7.1.0</dependency-check.plugin>
-        <deploy.plugin>3.0.0-M2</deploy.plugin>
-        <enforcer.plugin>3.0.0</enforcer.plugin>
+        <dependency-check.plugin>7.1.1</dependency-check.plugin>
+        <deploy.plugin>3.0.0</deploy.plugin>
+        <enforcer.plugin>3.1.0</enforcer.plugin>
         <formatter.plugin>2.19.0</formatter.plugin>
         <git-commit.plugin>5.0.0</git-commit.plugin>
         <gpg.plugin>3.0.1</gpg.plugin>
         <impsort.plugin>1.7.0</impsort.plugin>
-        <install.plugin>3.0.0-M1</install.plugin>
+        <install.plugin>3.0.0</install.plugin>
         <jacoco.plugin>0.8.8</jacoco.plugin>
         <jar.plugin>3.2.2</jar.plugin>
         <javadoc.plugin>3.4.0</javadoc.plugin>
         <jdeps.plugin>3.1.2</jdeps.plugin>
-        <jspc.plugin>10.0.9</jspc.plugin>
+        <jspc.plugin>10.0.11</jspc.plugin>
         <jxr.plugin>3.2.0</jxr.plugin>
         <l10n.plugin>1.8</l10n.plugin>
         <license.plugin>4.2.rc3</license.plugin>
         <lifecycle-mapping.plugin>1.0.0</lifecycle-mapping.plugin>
         <modernizer.plugin>2.4.0</modernizer.plugin>
         <pmd.plugin>3.17.0</pmd.plugin>
-        <project-info.plugin>3.3.0</project-info.plugin>
+        <project-info.plugin>3.4.0</project-info.plugin>
         <release.plugin>3.0.0-M6</release.plugin>
         <resources.plugin>3.2.0</resources.plugin>
         <scm-publish.plugin>3.1.0</scm-publish.plugin>
         <site.plugin>3.12.0</site.plugin>
         <sonar.plugin>3.9.1.2184</sonar.plugin>
-        <sortpom.plugin>3.1.3</sortpom.plugin>
+        <sortpom.plugin>3.2.0</sortpom.plugin>
         <source.plugin>3.2.1</source.plugin>
-        <spotbugs.plugin>4.7.0.0</spotbugs.plugin>
+        <spotbugs.plugin>4.7.1.0</spotbugs.plugin>
         <surefire.plugin>3.0.0-M7</surefire.plugin>
         <versions.plugin>2.11.0</versions.plugin>
         <war.plugin>3.3.2</war.plugin>
 
         <!-- Plugin Dependency Versions -->
-        <build-tools.version>1.2.7</build-tools.version>
+        <build-tools.version>1.3.0</build-tools.version>
         <bugpattern.version>1.5.0</bugpattern.version>
-        <checkstyle.version>10.3</checkstyle.version>
-        <ecj.version>3.29.0</ecj.version>
-        <extra-enforcer-rules.version>1.5.1</extra-enforcer-rules.version>
+        <checkstyle.version>10.3.1</checkstyle.version>
+        <ecj.version>3.30.0</ecj.version>
+        <extra-enforcer-rules.version>1.6.0</extra-enforcer-rules.version>
         <sb-contrib.version>7.4.7</sb-contrib.version>
         <findsecbugs.version>1.12.0</findsecbugs.version>
         <javac.version>9+181-r4173-1</javac.version>
