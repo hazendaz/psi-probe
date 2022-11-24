@@ -154,6 +154,10 @@ public class ContainerListenerBean implements NotificationListener {
       throws MalformedObjectNameException, InstanceNotFoundException {
 
     MBeanServer server = getContainerWrapper().getResourceResolver().getMBeanServer();
+    if (getContainerWrapper().getTomcatContainer() == null) {
+        logger.error("Unable to load MBeanServer");
+        return;
+    }
     String serverName = getContainerWrapper().getTomcatContainer().getName();
     Set<ObjectInstance> threadPools =
         server.queryMBeans(new ObjectName(serverName + ":type=ThreadPool,name=\"*\""), null);
