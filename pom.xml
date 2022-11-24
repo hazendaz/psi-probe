@@ -1008,6 +1008,7 @@
                                 <X-Compile-Source-JDK>${maven.compiler.source}</X-Compile-Source-JDK>
                                 <X-Compile-Target-JDK>${maven.compiler.target}</X-Compile-Target-JDK>
                                 <X-Compile-Release-JDK>${maven.compiler.release}</X-Compile-Release-JDK>
+                                <Add-Opens>java.base/java.lang java.base/java.util</Add-Opens>
                             </manifestEntries>
                             <manifest>
                                 <addClasspath>true</addClasspath>
