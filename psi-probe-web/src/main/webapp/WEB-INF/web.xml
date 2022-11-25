@@ -91,4 +91,9 @@
         <role-name>probeuser</role-name>
     </security-role>
 
+    <init-param>
+        <param-name>wait-on-shutdown</param-name>
+        <param-value>true</param-value>
+    </init-param>
+
 </web-app>
