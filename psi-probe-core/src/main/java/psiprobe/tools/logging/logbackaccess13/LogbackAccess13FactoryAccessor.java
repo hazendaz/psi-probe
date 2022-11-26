@@ -72,7 +72,7 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
   }
 
   /**
-   * Returns the Logback logger with a given name.
+   * Returns the Logback Access logger with a given name.
    *
    * @param name the name
    * @return the Logger with the given name
@@ -80,8 +80,7 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
   public LogbackAccess13LoggerAccessor getLogger(String name) {
     try {
       Class<? extends Object> clazz = getTarget().getClass();
-      Method getLogger =
-          MethodUtils.getAccessibleMethod(clazz, "getLogger", new Class[] {String.class});
+      Method getLogger = MethodUtils.getAccessibleMethod(clazz, "getLogger", String.class);
 
       Object logger = getLogger.invoke(getTarget(), name);
       if (logger == null) {
@@ -99,7 +98,7 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
   }
 
   /**
-   * Returns a list of wrappers for all Logback appenders that have an associated logger.
+   * Returns a list of wrappers for all Logback Access appenders that have an associated logger.
    *
    * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in
    *         use
