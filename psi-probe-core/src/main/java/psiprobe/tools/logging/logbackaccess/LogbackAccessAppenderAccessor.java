@@ -87,7 +87,6 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
    * <p>
    * If no such property exists, we assume the appender to write to stdout or stderr so the output
    * will be contained in catalina.out.
-   * </p>
    *
    * @return the file this appender writes to
    */
@@ -107,7 +106,6 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
         if (base.getCharset() != null) {
           return base.getCharset().name();
         }
-        return null;
       }
     }
     return null;
@@ -128,7 +126,6 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
    *
    * <p>
    * Note that Logback has no FATAL level.
-   * </p>
    *
    * @return the valid log level names
    */
