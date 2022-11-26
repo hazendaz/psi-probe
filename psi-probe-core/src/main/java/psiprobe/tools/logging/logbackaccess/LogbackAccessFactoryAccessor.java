@@ -63,7 +63,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
   }
 
   /**
-   * Returns the Logback logger with a given name.
+   * Returns the Logback Access logger with a given name.
    *
    * @param name the name
    * @return the Logger with the given name
@@ -89,7 +89,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
   }
 
   /**
-   * Returns a list of wrappers for all Logback appenders that have an associated logger.
+   * Returns a list of wrappers for all Logback Access appenders that have an associated logger.
    *
    * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in
    *         use
