@@ -55,6 +55,8 @@ import psiprobe.tools.logging.logback13.Logback13FactoryAccessor;
 import psiprobe.tools.logging.logback13.Logback13LoggerAccessor;
 import psiprobe.tools.logging.logbackaccess.LogbackAccessFactoryAccessor;
 import psiprobe.tools.logging.logbackaccess.LogbackAccessLoggerAccessor;
+import psiprobe.tools.logging.logbackaccess13.LogbackAccess13FactoryAccessor;
+import psiprobe.tools.logging.logbackaccess13.LogbackAccess13LoggerAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackFactoryAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackLoggerAccessor;
 import psiprobe.tools.logging.slf4jlogback13.TomcatSlf4jLogback13FactoryAccessor;
@@ -454,9 +456,10 @@ public class LogResolverBean {
 
     // check for Logback Access 1.3 loggers
     try {
-      LogbackAccessFactoryAccessor logbackAccessAccessor = new LogbackAccessFactoryAccessor(cl);
-      logbackAccessAccessor.setApplication(application);
-      appenders.addAll(logbackAccessAccessor.getAppenders());
+      LogbackAccess13FactoryAccessor logbackAccess13Accessor =
+          new LogbackAccess13FactoryAccessor(cl);
+      logbackAccess13Accessor.setApplication(application);
+      appenders.addAll(logbackAccess13Accessor.getAppenders());
     } catch (Exception e) {
       logger.debug("Could not resolve logback-access 1.3 loggers for '{}'", applicationName, e);
     }
@@ -792,14 +795,15 @@ public class LogResolverBean {
       boolean root, String logName, String appenderName) {
 
     try {
-      LogbackAccessFactoryAccessor manager = new LogbackAccessFactoryAccessor(cl);
+      LogbackAccess13FactoryAccessor manager = new LogbackAccess13FactoryAccessor(cl);
       manager.setApplication(application);
-      LogbackAccessLoggerAccessor log = root ? manager.getRootLogger() : manager.getLogger(logName);
+      LogbackAccess13LoggerAccessor log =
+          root ? manager.getRootLogger() : manager.getLogger(logName);
       if (log != null) {
         return log.getAppender(appenderName);
       }
     } catch (Exception e) {
-      logger.debug("getLogbackAccessLogDestination failed", e);
+      logger.debug("getLogbackAccess13LogDestination failed", e);
     }
     return null;
   }
