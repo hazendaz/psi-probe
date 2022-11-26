@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the GPL License. You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -11,11 +11,14 @@
 package psiprobe.tools.logging.logbackaccess;
 
 import com.google.common.collect.Iterators;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.commons.lang3.reflect.MethodUtils;
+
 import psiprobe.tools.logging.DefaultAccessor;
 
 /**
@@ -25,14 +28,14 @@ public class LogbackAccessLoggerAccessor extends DefaultAccessor {
 
   /**
    * Returns all appenders of this logger.
-   * 
+   *
    * @return a list of {@link LogbackAccessAppenderAccessor}s
    */
   public List<LogbackAccessAppenderAccessor> getAppenders() {
     List<LogbackAccessAppenderAccessor> appenders = new ArrayList<>();
     try {
-      for (Object appender : Collections.list(Iterators.asEnumeration((Iterator<Object>) MethodUtils
-              .invokeMethod(getTarget(), "iteratorForAppenders")))) {
+      for (Object appender : Collections.list(Iterators.asEnumeration(
+          (Iterator<Object>) MethodUtils.invokeMethod(getTarget(), "iteratorForAppenders")))) {
         List<Object> siftedAppenders = getSiftedAppenders(appender);
         if (siftedAppenders != null) {
           for (Object siftedAppender : siftedAppenders) {
@@ -43,8 +46,8 @@ public class LogbackAccessLoggerAccessor extends DefaultAccessor {
         }
       }
     } catch (NoClassDefFoundError e) {
-        logger.error("{}#getAppenders() failed", getTarget().getClass().getName(), e);
-        logger.error("To see this logger, upgrade slf4j to 1.7.21+");
+      logger.error("{}#getAppenders() failed", getTarget().getClass().getName(), e);
+      logger.error("To see this logger, upgrade slf4j to 1.7.21+");
     } catch (Exception e) {
       logger.error("{}#getAppenders() failed", getTarget().getClass().getName(), e);
     }
@@ -53,7 +56,7 @@ public class LogbackAccessLoggerAccessor extends DefaultAccessor {
 
   /**
    * Returns the appender of this logger with the given name.
-   * 
+   *
    * @param name the name of the appender to return
    * @return the appender with the given name, or null if no such appender exists for this logger
    */
@@ -104,7 +107,7 @@ public class LogbackAccessLoggerAccessor extends DefaultAccessor {
 
   /**
    * Gets the log level of this logger.
-   * 
+   *
    * @return the level of this logger
    */
   public String getLevel() {
@@ -119,7 +122,7 @@ public class LogbackAccessLoggerAccessor extends DefaultAccessor {
 
   /**
    * Sets the log level of this logger.
-   * 
+   *
    * @param newLevelStr the name of the new level
    */
   public void setLevel(String newLevelStr) {

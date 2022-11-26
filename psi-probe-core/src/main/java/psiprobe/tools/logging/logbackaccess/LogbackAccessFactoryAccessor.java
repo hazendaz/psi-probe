@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the GPL License. You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -14,12 +14,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.apache.commons.lang3.reflect.MethodUtils;
+
 import psiprobe.tools.logging.DefaultAccessor;
 
 /**
  * Wraps a Logback logger factory from a given web application class loader.
- * 
+ *
  * <p>
  * All Logback classes are loaded via the given class loader and not via psi-probe's own class
  * loader. For this reasons, all methods on Logback objects are invoked via reflection.
@@ -38,8 +40,8 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
    * @throws IllegalAccessException the illegal access exception
    * @throws InvocationTargetException the invocation target exception
    */
-  public LogbackAccessFactoryAccessor(ClassLoader cl) throws ClassNotFoundException,
-      IllegalAccessException, InvocationTargetException {
+  public LogbackAccessFactoryAccessor(ClassLoader cl)
+      throws ClassNotFoundException, IllegalAccessException, InvocationTargetException {
     // Check if Logback Access exists
     Class<?> loggerFactoryClass = cl.loadClass("ch.qos.logback.access.spi.AccessContext");
     if (loggerFactoryClass == null) {
@@ -51,7 +53,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
 
   /**
    * Returns the Logback root logger.
-   * 
+   *
    * @return the root logger
    */
   public LogbackAccessLoggerAccessor getRootLogger() {
@@ -69,8 +71,7 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
   public LogbackAccessLoggerAccessor getLogger(String name) {
     try {
       Class<? extends Object> clazz = getTarget().getClass();
-      Method getLogger = MethodUtils
-          .getAccessibleMethod(clazz, "getLogger", String.class);
+      Method getLogger = MethodUtils.getAccessibleMethod(clazz, "getLogger", String.class);
 
       Object logger = getLogger.invoke(getTarget(), name);
       if (logger == null) {
@@ -89,8 +90,9 @@ public class LogbackAccessFactoryAccessor extends DefaultAccessor {
 
   /**
    * Returns a list of wrappers for all Logback appenders that have an associated logger.
-   * 
-   * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in use
+   *
+   * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in
+   *         use
    */
   public List<LogbackAccessAppenderAccessor> getAppenders() {
     List<LogbackAccessAppenderAccessor> appenders = new ArrayList<>();
