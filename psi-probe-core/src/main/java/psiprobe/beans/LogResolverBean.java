@@ -49,12 +49,12 @@ import psiprobe.tools.logging.log4j2.Log4J2AppenderAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerConfigAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2LoggerContextAccessor;
 import psiprobe.tools.logging.log4j2.Log4J2WebLoggerContextUtilsAccessor;
-import psiprobe.tools.logging.logbackaccess.LogbackAccessFactoryAccessor;
-import psiprobe.tools.logging.logbackaccess.LogbackAccessLoggerAccessor;
 import psiprobe.tools.logging.logback.LogbackFactoryAccessor;
 import psiprobe.tools.logging.logback.LogbackLoggerAccessor;
 import psiprobe.tools.logging.logback13.Logback13FactoryAccessor;
 import psiprobe.tools.logging.logback13.Logback13LoggerAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessFactoryAccessor;
+import psiprobe.tools.logging.logbackaccess.LogbackAccessLoggerAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackFactoryAccessor;
 import psiprobe.tools.logging.slf4jlogback.TomcatSlf4jLogbackLoggerAccessor;
 import psiprobe.tools.logging.slf4jlogback13.TomcatSlf4jLogback13FactoryAccessor;
@@ -445,8 +445,7 @@ public class LogResolverBean {
 
     // check for Logback Access loggers
     try {
-      LogbackAccessFactoryAccessor logbackAccessAccessor =
-          new LogbackAccessFactoryAccessor(cl);
+      LogbackAccessFactoryAccessor logbackAccessAccessor = new LogbackAccessFactoryAccessor(cl);
       logbackAccessAccessor.setApplication(application);
       appenders.addAll(logbackAccessAccessor.getAppenders());
     } catch (Exception e) {
@@ -455,8 +454,7 @@ public class LogResolverBean {
 
     // check for Logback Access 1.3 loggers
     try {
-      LogbackAccessFactoryAccessor logbackAccessAccessor =
-          new LogbackAccessFactoryAccessor(cl);
+      LogbackAccessFactoryAccessor logbackAccessAccessor = new LogbackAccessFactoryAccessor(cl);
       logbackAccessAccessor.setApplication(application);
       appenders.addAll(logbackAccessAccessor.getAppenders());
     } catch (Exception e) {
