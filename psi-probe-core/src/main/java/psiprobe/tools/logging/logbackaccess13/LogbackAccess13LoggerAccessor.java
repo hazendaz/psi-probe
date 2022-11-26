@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the GPL License. You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -10,15 +10,15 @@
  */
 package psiprobe.tools.logging.logbackaccess13;
 
-import org.apache.commons.beanutils.MethodUtils;
-import org.apache.commons.collections.IteratorUtils;
-
-import psiprobe.tools.logging.DefaultAccessor;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+
+import org.apache.commons.beanutils.MethodUtils;
+import org.apache.commons.collections.IteratorUtils;
+
+import psiprobe.tools.logging.DefaultAccessor;
 
 /**
  * A wrapper for a Logback logger.
@@ -27,14 +27,15 @@ public class LogbackAccess13LoggerAccessor extends DefaultAccessor {
 
   /**
    * Returns all appenders of this logger.
-   * 
+   *
    * @return a list of {@link LogbackAccessAppenderAccessor}s
    */
   public List<LogbackAccess13AppenderAccessor> getAppenders() {
     List<LogbackAccess13AppenderAccessor> appenders = new ArrayList<>();
     try {
-      for (Object appender : Collections.list(IteratorUtils.asEnumeration((Iterator<Object>) MethodUtils
-              .invokeMethod(getTarget(), "iteratorForAppenders", null)))) {
+      for (Object appender : Collections
+          .list(IteratorUtils.asEnumeration((Iterator<Object>) MethodUtils.invokeMethod(getTarget(),
+              "iteratorForAppenders", null)))) {
         List<Object> siftedAppenders = getSiftedAppenders(appender);
         if (siftedAppenders != null) {
           for (Object siftedAppender : siftedAppenders) {
@@ -52,7 +53,7 @@ public class LogbackAccess13LoggerAccessor extends DefaultAccessor {
 
   /**
    * Returns the appender of this logger with the given name.
-   * 
+   *
    * @param name the name of the appender to return
    * @return the appender with the given name, or null if no such appender exists for this logger
    */
@@ -103,7 +104,7 @@ public class LogbackAccess13LoggerAccessor extends DefaultAccessor {
 
   /**
    * Gets the log level of this logger.
-   * 
+   *
    * @return the level of this logger
    */
   public String getLevel() {
@@ -118,7 +119,7 @@ public class LogbackAccess13LoggerAccessor extends DefaultAccessor {
 
   /**
    * Sets the log level of this logger.
-   * 
+   *
    * @param newLevelStr the name of the new level
    */
   public void setLevel(String newLevelStr) {
@@ -161,7 +162,8 @@ public class LogbackAccess13LoggerAccessor extends DefaultAccessor {
    * @param appender the appender
    * @param appenders the appenders
    */
-  private void wrapAndAddAppender(Object appender, List<LogbackAccess13AppenderAccessor> appenders) {
+  private void wrapAndAddAppender(Object appender,
+      List<LogbackAccess13AppenderAccessor> appenders) {
     LogbackAccess13AppenderAccessor appenderAccessor = wrapAppender(appender);
     if (appenderAccessor != null) {
       appenders.add(appenderAccessor);
