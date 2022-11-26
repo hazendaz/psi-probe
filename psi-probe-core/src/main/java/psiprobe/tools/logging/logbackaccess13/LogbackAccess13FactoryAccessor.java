@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the GPL License. You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -10,18 +10,18 @@
  */
 package psiprobe.tools.logging.logbackaccess13;
 
-import org.apache.commons.beanutils.MethodUtils;
-
-import psiprobe.tools.logging.DefaultAccessor;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.beanutils.MethodUtils;
+
+import psiprobe.tools.logging.DefaultAccessor;
+
 /**
  * Wraps a Logback logger factory from a given web application class loader.
- * 
+ *
  * <p>
  * All Logback classes are loaded via the given class loader and not via psi-probe's own class
  * loader. For this reasons, all methods on Logback objects are invoked via reflection.
@@ -40,15 +40,15 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
    * @throws IllegalAccessException the illegal access exception
    * @throws InvocationTargetException the invocation target exception
    */
-  public LogbackAccess13FactoryAccessor(ClassLoader cl) throws ClassNotFoundException,
-      IllegalAccessException, InvocationTargetException {
+  public LogbackAccess13FactoryAccessor(ClassLoader cl)
+      throws ClassNotFoundException, IllegalAccessException, InvocationTargetException {
 
     // Get the singleton SLF4J binding, which may or may not be Logback, depending on the binding.
     Class<?> clazz = cl.loadClass("ch.qos.logback.access.tomcat.LogbackValve");
     Method getSingleton = MethodUtils.getAccessibleMethod(clazz, "getSingleton", new Class[0]);
     Object singleton = getSingleton.invoke(null);
-    Method getLoggerFactory = MethodUtils
-        .getAccessibleMethod(clazz, "getLoggerFactory", new Class[0]);
+    Method getLoggerFactory =
+        MethodUtils.getAccessibleMethod(clazz, "getLoggerFactory", new Class[0]);
 
     Object loggerFactory = getLoggerFactory.invoke(singleton);
 
@@ -62,7 +62,7 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
 
   /**
    * Returns the Logback root logger.
-   * 
+   *
    * @return the root logger
    */
   public LogbackAccess13LoggerAccessor getRootLogger() {
@@ -80,8 +80,8 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
   public LogbackAccess13LoggerAccessor getLogger(String name) {
     try {
       Class<? extends Object> clazz = getTarget().getClass();
-      Method getLogger = MethodUtils
-          .getAccessibleMethod(clazz, "getLogger", new Class[] {String.class});
+      Method getLogger =
+          MethodUtils.getAccessibleMethod(clazz, "getLogger", new Class[] {String.class});
 
       Object logger = getLogger.invoke(getTarget(), name);
       if (logger == null) {
@@ -100,8 +100,9 @@ public class LogbackAccess13FactoryAccessor extends DefaultAccessor {
 
   /**
    * Returns a list of wrappers for all Logback appenders that have an associated logger.
-   * 
-   * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in use
+   *
+   * @return a list of {@link LogbackAccessAppenderAccessor}s representing all appenders that are in
+   *         use
    */
   public List<LogbackAccess13AppenderAccessor> getAppenders() {
     List<LogbackAccess13AppenderAccessor> appenders = new ArrayList<>();
