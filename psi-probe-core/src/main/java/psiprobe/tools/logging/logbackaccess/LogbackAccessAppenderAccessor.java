@@ -1,4 +1,4 @@
-/**
+/*
  * Licensed under the GPL License. You may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
@@ -13,7 +13,9 @@ package psiprobe.tools.logging.logbackaccess;
 import ch.qos.logback.core.OutputStreamAppender;
 import ch.qos.logback.core.encoder.Encoder;
 import ch.qos.logback.core.encoder.LayoutWrappingEncoder;
+
 import java.io.File;
+
 import psiprobe.tools.logging.AbstractLogDestination;
 
 /**
@@ -58,9 +60,9 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
   }
 
   /**
-   * Returns the log type, to distinguish logback access appenders from other types like log4j appenders or
-   * jdk handlers.
-   * 
+   * Returns the log type, to distinguish logback access appenders from other types like log4j
+   * appenders or jdk handlers.
+   *
    * @return the log type
    */
   @Override
@@ -70,7 +72,7 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
 
   /**
    * Returns the name of this appender.
-   * 
+   *
    * @return the name of this appender.
    */
   @Override
@@ -81,12 +83,12 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
   /**
    * Returns the file that this appender writes to by accessing the {@code file} bean property of
    * the appender.
-   * 
+   *
    * <p>
    * If no such property exists, we assume the appender to write to stdout or stderr so the output
    * will be contained in catalina.out.
    * </p>
-   * 
+   *
    * @return the file this appender writes to
    */
   @Override
@@ -113,7 +115,7 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
 
   /**
    * Gets the level of the associated logger.
-   * 
+   *
    * @return the logger's level
    */
   @Override
@@ -123,11 +125,11 @@ public class LogbackAccessAppenderAccessor extends AbstractLogDestination {
 
   /**
    * Returns the valid log level names.
-   * 
+   *
    * <p>
    * Note that Logback has no FATAL level.
    * </p>
-   * 
+   *
    * @return the valid log level names
    */
   @Override
