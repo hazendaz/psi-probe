@@ -19,7 +19,7 @@
     <head>
         <title><spring:message code="probe.jsp.title.datasources"/></title>
         <script src="<c:url value='/js/prototype.js'/>"></script>
-        <script src="<c:url value='/webjars/scriptaculous/1.9.0/scriptaculous.js'/>"></script>
+        <script src="<c:url value='/webjars/scriptaculous/scriptaculous.js'/>"></script>
         <script src="<c:url value='/js/func.js'/>"></script>
         <script src="<c:url value='/js/behaviour.js'/>"></script>
     </head>
