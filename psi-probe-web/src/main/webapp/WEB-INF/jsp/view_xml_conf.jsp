@@ -25,7 +25,7 @@
         <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/classic/scroller.css"/>
         <script src="<c:url value='/js/prototype.js'/>"></script>
         <script src="<c:url value='/js/behaviour.js'/>"></script>
-        <script src="/webjars/scriptaculous/1.9.0/scriptaculous.js"></script>
+        <script src="/webjars/scriptaculous/scriptaculous.js"></script>
         <script src="<c:url value='/js/areascroller.js'/>"></script>
     </head>
 
