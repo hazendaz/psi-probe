@@ -21,6 +21,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.AccessDecisionVoter;
@@ -30,12 +32,17 @@ import org.springframework.security.access.vote.AffirmativeBased;
 import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authorization.AuthorityAuthorizationManager;
+import org.springframework.security.authorization.AuthorizationDecision;
+import org.springframework.security.authorization.AuthorizationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
@@ -60,6 +67,22 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class ProbeSecurityConfig {
+
+  /**
+   * Gets the security filter chain.
+   *
+   * @param http the http
+   * @return the security filter chain
+   * @throws Exception the exception
+   */
+  @Bean(name = "securityFilterChain")
+  public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll().requestMatchers("/**")
+        .permitAll().and().addFilter(securityContextHolderFilter(securityContextRepository())
+        .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
+        .addFilter(getExceptionTranslationFilter()).addFilter(getAuthorizationFilter());
+    return http.build();
+  }
 
   /**
    * Gets the filter chain proxy.
@@ -87,7 +110,6 @@ public class ProbeSecurityConfig {
     return new ProviderManager(providers);
   }
 
-
   /**
    * Security context holder filter.
    *
@@ -109,7 +131,7 @@ public class ProbeSecurityConfig {
   public SecurityContextRepository securityContextRepository() {
     return new HttpSessionSecurityContextRepository();
   }
-
+ 
   /**
    * Gets the pre authenticated authentication provider.
    *
@@ -229,12 +251,12 @@ public class ProbeSecurityConfig {
    *
    * @return the affirmative based
    */
-  @Bean(name = "affirmativeBased")
-  public AffirmativeBased getAffirmativeBased() {
-    List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<>();
-    decisionVoters.add(getRoleVoter());
+  @Bean(name = "authorizationManager")
+  public AuthorizationManager<HttpServletRequest> getAuthorizationManager() {
+    List<AuthorizationManager<HttpServletRequest>> decisionVoters = new ArrayList<>();
+    decisionVoters.add(getAuthorityAuthorizationManager());
 
-    AffirmativeBased based = new AffirmativeBased(decisionVoters);
+    AuthorizationDecision based = new AuthorizationDecision(decisionVoters);
     based.setAllowIfAllAbstainDecisions(false);
     return based;
   }
@@ -244,9 +266,9 @@ public class ProbeSecurityConfig {
    *
    * @return the filter security interceptor
    */
-  @Bean(name = "filterSecurityInterceptor")
-  public FilterSecurityInterceptor getFilterSecurityInterceptor() {
-    FilterSecurityInterceptor interceptor = new FilterSecurityInterceptor();
+  @Bean(name = "authorizationFilter")
+  public AuthorizationFilter getAuthorizationFilter() {
+    AuthorizationFilter interceptor = new AuthorizationFilter(getAuthorizationManager());
     interceptor.setAuthenticationManager(getProviderManager());
     interceptor.setAccessDecisionManager(getAffirmativeBased());
 
@@ -274,9 +296,9 @@ public class ProbeSecurityConfig {
    *
    * @return the role voter
    */
-  @Bean(name = "roleVoter")
-  public RoleVoter getRoleVoter() {
-    return new RoleVoter();
+  @Bean(name = "authorityAuthorizationManager")
+  public AuthorityAuthorizationManager<HttpServletRequest> getAuthorityAuthorizationManager() {
+    return new AuthorityAuthorizationManager();
   }
 
   /**
