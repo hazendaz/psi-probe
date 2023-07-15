@@ -12,9 +12,6 @@ package psiprobe;
 
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.HttpConstraint;
-import jakarta.servlet.annotation.ServletSecurity;
-import jakarta.servlet.annotation.ServletSecurity.TransportGuarantee;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,9 +32,6 @@ import psiprobe.beans.ContainerWrapperBean;
  * instance into ContainerWrapperBean. Wrapper instance is our gateway to Tomcat.
  */
 @WebServlet
-@ServletSecurity(value = @HttpConstraint(
-    rolesAllowed = {"probeuser", "poweruser", "manager", "manager-gui", "poweruserplus"},
-    transportGuarantee = TransportGuarantee.CONFIDENTIAL))
 public class ProbeServlet extends DispatcherServlet implements ContainerServlet {
 
   /** The Constant serialVersionUID. */
