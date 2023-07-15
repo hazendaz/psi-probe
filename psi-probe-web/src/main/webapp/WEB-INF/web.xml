@@ -45,25 +45,6 @@
         <location>/WEB-INF/jsp/errors/servleterror.jsp</location>
     </error-page>
 
-    <security-constraint>
-        <display-name>No anonymous access</display-name>
-        <web-resource-collection>
-            <web-resource-name>All areas</web-resource-name>
-            <url-pattern>/*</url-pattern>
-        </web-resource-collection>
-        <!-- Since tomcat 8.5, should be able to remove 'auth-constraint' -->
-        <auth-constraint>
-            <role-name>probeuser</role-name>
-            <role-name>poweruser</role-name>
-            <role-name>manager</role-name>
-            <role-name>manager-gui</role-name>
-            <role-name>poweruserplus</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-
     <!-- Defines the Login Configuration for this Application -->
     <login-config>
         <auth-method>BASIC</auth-method>
