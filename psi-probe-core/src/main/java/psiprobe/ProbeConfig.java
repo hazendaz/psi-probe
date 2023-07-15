@@ -365,7 +365,8 @@ public class ProbeConfig implements WebMvcConfigurer {
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     logger.debug("Registering webjars resource handler");
-    registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
+    registry.addResourceHandler("/webjars/**")
+        .addResourceLocations("classpath:/META-INF/resources/webjars/");
   }
 
   /**
