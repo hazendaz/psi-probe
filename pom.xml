@@ -190,6 +190,7 @@
         <ojdbc.version>19.29.0.0</ojdbc.version>
         <oshi.version>6.9.1</oshi.version>
         <quartz.version>2.5.2</quartz.version>
+        <scriptaculous.version>1.9.0</scriptaculous.version>
         <servlet-api.version>6.1.0</servlet-api.version>
         <sitemesh.version>2.6.2</sitemesh.version>
         <slf4j.version>2.0.17</slf4j.version>
@@ -201,6 +202,7 @@
         <tomee.version>10.1.2</tomee.version>
         <transaction-api.version>2.0.1</transaction-api.version>
         <ucp.version>21.20.0.0</ucp.version>
+        <webjars-locator.version>0.52</webjars-locator.version>
         <wrapper.version>3.2.3</wrapper.version>
         <xstream.version>1.4.21</xstream.version>
         <vibur-dbcp.version>26.0</vibur-dbcp.version>
@@ -614,6 +616,18 @@
                 <groupId>net.java.dev.jna</groupId>
                 <artifactId>jna-platform</artifactId>
                 <version>${jna.version}</version>
+            </dependency>
+
+            <!-- WebJars -->
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>webjars-locator</artifactId>
+                <version>${webjars-locator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>scriptaculous</artifactId>
+                <version>${scriptaculous.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
