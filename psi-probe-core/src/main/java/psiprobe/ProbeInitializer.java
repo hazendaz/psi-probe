@@ -14,11 +14,14 @@ import com.opensymphony.sitemesh.webapp.SiteMeshFilter;
 
 import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterRegistration;
+import jakarta.servlet.HttpConstraintElement;
 import jakarta.servlet.MultipartConfigElement;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRegistration;
+import jakarta.servlet.ServletSecurityElement;
 import jakarta.servlet.SessionTrackingMode;
+import jakarta.servlet.annotation.ServletSecurity.TransportGuarantee;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -66,6 +69,14 @@ public class ProbeInitializer implements WebApplicationInitializer {
 
     // Add Mapping
     probe.addMapping("*.htm", "*.ajax", "/logs/*", "/chart.png", "/webjars/*");
+
+    // Setup security constraint
+    HttpConstraintElement httpConstraintElement =
+        new HttpConstraintElement(TransportGuarantee.CONFIDENTIAL, "probeuser", "poweruser",
+            "manager", "manager-gui", "poweruserplus");
+    ServletSecurityElement servletSecurityElement =
+        new ServletSecurityElement(httpConstraintElement);
+    probe.setServletSecurity(servletSecurityElement);
 
     // Set sitemesh filter
     FilterRegistration.Dynamic sitemesh =
