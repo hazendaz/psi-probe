@@ -281,6 +281,18 @@
             <artifactId>spring-security-web</artifactId>
             <scope>compile</scope>
         </dependency>
+
+        <!-- WebJars -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>scriptaculous</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>
