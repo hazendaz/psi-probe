@@ -37,6 +37,7 @@ import org.springframework.web.servlet.ThemeResolver;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -359,6 +360,12 @@ public class ProbeConfig implements WebMvcConfigurer {
   public void addInterceptors(InterceptorRegistry registry) {
     logger.debug("Registering localeChangeInterceptor");
     registry.addInterceptor(getLocaleChangeInterceptor());
+  }
+
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    logger.debug("Registering webjars resource handler");
+    registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
   }
 
   /**
