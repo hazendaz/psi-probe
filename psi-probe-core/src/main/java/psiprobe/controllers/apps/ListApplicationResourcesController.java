@@ -10,6 +10,7 @@
  */
 package psiprobe.controllers.apps;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,7 +37,7 @@ public class ListApplicationResourcesController extends AbstractContextHandlerCo
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) throws NamingException {
 
     return new ModelAndView(getViewName(), "resources", getContainerWrapper().getResourceResolver()
         .getApplicationResources(context, getContainerWrapper()));

@@ -12,6 +12,7 @@ package psiprobe.controllers;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ import org.jfree.data.xy.DefaultTableXYDataset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -92,7 +94,7 @@ public class RenderChartController extends AbstractController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws ServletRequestBindingException, IOException {
 
     // the max number of series
     final int seriesMaxCount = 9;
