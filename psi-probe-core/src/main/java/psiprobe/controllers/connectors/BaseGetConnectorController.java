@@ -10,12 +10,23 @@
  */
 package psiprobe.controllers.connectors;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -52,7 +63,10 @@ public class BaseGetConnectorController extends AbstractTomcatContainerControlle
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response)
+      throws ServletRequestBindingException, MalformedObjectNameException,
+      AttributeNotFoundException, InstanceNotFoundException, IntrospectionException,
+      ReflectionException, MBeanException, IOException, URISyntaxException, GeoIp2Exception {
     String connectorName = ServletRequestUtils.getStringParameter(request, "cn");
     Connector connector = null;
 

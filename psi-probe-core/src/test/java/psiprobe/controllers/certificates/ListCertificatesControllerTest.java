@@ -15,6 +15,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.codebox.bean.JavaBeanTester;
 
 import java.io.File;
+import java.io.IOException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.CertificateException;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -53,10 +57,14 @@ class ListCertificatesControllerTest {
   /**
    * Test get certificates.
    *
-   * @throws Exception the exception
+   * @throws IOException
+   * @throws CertificateException
+   * @throws NoSuchAlgorithmException
+   * @throws KeyStoreException
    */
   @Test
-  void certificatesTest() throws Exception {
+  void certificatesTest()
+      throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
     ListCertificatesController controller = new ListCertificatesController();
 
     String storeType = "jks";
@@ -73,10 +81,14 @@ class ListCertificatesControllerTest {
   /**
    * Test get certificates relative.
    *
-   * @throws Exception the exception
+   * @throws IOException
+   * @throws CertificateException
+   * @throws NoSuchAlgorithmException
+   * @throws KeyStoreException
    */
   @Test
-  void certificatesRelativeTest() throws Exception {
+  void certificatesRelativeTest()
+      throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
     ListCertificatesController controller = new ListCertificatesController();
 
     String storeType = "jks";
@@ -96,10 +108,14 @@ class ListCertificatesControllerTest {
   /**
    * Test get certificates relative uri.
    *
-   * @throws Exception the exception
+   * @throws IOException
+   * @throws CertificateException
+   * @throws NoSuchAlgorithmException
+   * @throws KeyStoreException
    */
   @Test
-  void certificatesRelativeUriTest() throws Exception {
+  void certificatesRelativeUriTest()
+      throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
     ListCertificatesController controller = new ListCertificatesController();
 
     String storeType = "jks";
@@ -120,10 +136,14 @@ class ListCertificatesControllerTest {
   /**
    * Test get certificates absolute uri.
    *
-   * @throws Exception the exception
+   * @throws IOException
+   * @throws CertificateException
+   * @throws NoSuchAlgorithmException
+   * @throws KeyStoreException
    */
   @Test
-  void certificatesAbsoluteUriTest() throws Exception {
+  void certificatesAbsoluteUriTest()
+      throws IOException, KeyStoreException, NoSuchAlgorithmException, CertificateException {
     ListCertificatesController controller = new ListCertificatesController();
 
     String storeType = "jks";

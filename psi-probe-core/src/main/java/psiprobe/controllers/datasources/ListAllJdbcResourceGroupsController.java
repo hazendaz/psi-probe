@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +44,7 @@ public class ListAllJdbcResourceGroupsController extends AbstractTomcatContainer
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws NamingException {
 
     List<DataSourceInfoGroup> dataSourceGroups = new ArrayList<>();
     List<DataSourceInfo> dataSources = new ArrayList<>();
