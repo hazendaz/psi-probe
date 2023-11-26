@@ -10,6 +10,8 @@
  */
 package psiprobe.controllers.sessions;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,7 +43,7 @@ public class ExpireSessionsController extends AbstractTomcatContainerController 
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws IOException {
 
     for (String sidWebApp : ServletRequestUtils.getStringParameters(request, "sid_webapp")) {
       if (sidWebApp != null) {
