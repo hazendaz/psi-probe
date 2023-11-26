@@ -56,7 +56,7 @@ public class TrustStoreController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
     List<Map<String, String>> certificateList = new ArrayList<>();
     try {
       String trustStoreType = System.getProperty("javax.net.ssl.trustStoreType");

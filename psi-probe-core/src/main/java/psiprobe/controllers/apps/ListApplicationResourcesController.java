@@ -13,6 +13,8 @@ package psiprobe.controllers.apps;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.naming.NamingException;
+
 import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,7 @@ public class ListApplicationResourcesController extends AbstractContextHandlerCo
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) throws NamingException {
 
     return new ModelAndView(getViewName(), "resources", getContainerWrapper().getResourceResolver()
         .getApplicationResources(context, getContainerWrapper()));

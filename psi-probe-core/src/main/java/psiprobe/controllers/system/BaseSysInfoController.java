@@ -97,7 +97,7 @@ public class BaseSysInfoController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     SystemInformation systemInformation = new SystemInformation();
     systemInformation

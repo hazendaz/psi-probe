@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -38,7 +40,7 @@ public class ListAllJdbcResourcesController extends AbstractTomcatContainerContr
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse httpServletResponse) throws Exception {
+      HttpServletResponse httpServletResponse) throws NamingException {
 
     boolean supportsGlobal = getContainerWrapper().getResourceResolver().supportsGlobalResources();
     boolean supportsPrivate =

@@ -15,10 +15,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeDataSupport;
 
 import org.slf4j.Logger;
@@ -39,10 +43,14 @@ public class JvmMemoryInfoAccessorBean {
    * Gets the pools.
    *
    * @return the pools
-   *
-   * @throws MalformedObjectNameException the malformed object name exception
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws InstanceNotFoundException
+   * @throws MalformedObjectNameException
+   * @throws AttributeNotFoundException
    */
-  public List<MemoryPool> getPools() throws MalformedObjectNameException {
+  public List<MemoryPool> getPools() throws InstanceNotFoundException, ReflectionException,
+      MBeanException, MalformedObjectNameException, AttributeNotFoundException {
 
     MBeanServer mbeanServer = ManagementFactory.getPlatformMBeanServer();
     Set<ObjectInstance> objectInstanceMemoryPools =

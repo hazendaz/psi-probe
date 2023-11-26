@@ -74,7 +74,7 @@ public class MemoryPoolMailingListener extends AbstractFlapListener
   }
 
   @Override
-  public void afterPropertiesSet() throws Exception {
+  public void afterPropertiesSet() {
     if (getMailer().getSmtp() == null) {
       logger.info("Mailer SMTP host is not set.  Disabling listener.");
       setEnabled(false);

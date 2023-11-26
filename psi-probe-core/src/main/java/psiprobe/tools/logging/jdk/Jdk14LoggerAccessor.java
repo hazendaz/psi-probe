@@ -12,6 +12,7 @@ package psiprobe.tools.logging.jdk;
 
 import com.google.common.base.Strings;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -177,10 +178,12 @@ public class Jdk14LoggerAccessor extends DefaultAccessor {
    * @param target the target
    *
    * @return the level internal
-   *
-   * @throws Exception the exception
+   * @throws InvocationTargetException
+   * @throws IllegalAccessException
+   * @throws NoSuchMethodException
    */
-  private Object getLevelInternal(Object target) throws Exception {
+  private Object getLevelInternal(Object target)
+      throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
     return MethodUtils.invokeMethod(target, "getLevel");
   }
 

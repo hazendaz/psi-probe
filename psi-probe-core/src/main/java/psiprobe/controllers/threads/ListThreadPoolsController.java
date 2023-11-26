@@ -16,6 +16,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.util.List;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,7 +69,8 @@ public class ListThreadPoolsController extends AbstractTomcatContainerController
 
   @Override
   public ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws InstanceNotFoundException, AttributeNotFoundException,
+      IntrospectionException, MalformedObjectNameException, ReflectionException, MBeanException {
 
     List<ThreadPool> pools = containerListenerBean.getThreadPools();
     return new ModelAndView(getViewName()).addObject("pools", pools);

@@ -96,7 +96,7 @@ public class BaseGetApplicationController extends AbstractContextHandlerControll
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
 
     boolean calcSize = ServletRequestUtils.getBooleanParameter(request, "size", false)
         && SecurityUtils.hasAttributeValueRole(getServletContext());

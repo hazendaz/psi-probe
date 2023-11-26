@@ -12,6 +12,18 @@ package psiprobe.beans.stats.collectors;
 
 import jakarta.inject.Inject;
 
+import com.maxmind.geoip2.exception.GeoIp2Exception;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
+
 import org.springframework.beans.factory.annotation.Value;
 
 import psiprobe.beans.ContainerListenerBean;
@@ -46,7 +58,9 @@ public class ConnectorStatsCollectorBean extends AbstractStatsCollectorBean {
   }
 
   @Override
-  public void collect() throws Exception {
+  public void collect() throws InterruptedException, MalformedObjectNameException,
+      AttributeNotFoundException, InstanceNotFoundException, IntrospectionException,
+      ReflectionException, MBeanException, IOException, URISyntaxException, GeoIp2Exception {
     for (Connector connector : listenerBean.getConnectors(false)) {
       String statName = "stat.connector." + connector.getProtocolHandler();
       buildDeltaStats(statName + ".requests", connector.getRequestCount());
@@ -60,9 +74,19 @@ public class ConnectorStatsCollectorBean extends AbstractStatsCollectorBean {
   /**
    * Reset.
    *
-   * @throws Exception the exception
+   * @throws GeoIp2Exception
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws IntrospectionException
+   * @throws InstanceNotFoundException
+   * @throws AttributeNotFoundException
+   * @throws MalformedObjectNameException
    */
-  public void reset() throws Exception {
+  public void reset() throws MalformedObjectNameException, AttributeNotFoundException,
+      InstanceNotFoundException, IntrospectionException, ReflectionException, MBeanException,
+      IOException, URISyntaxException, GeoIp2Exception {
     for (Connector connector : listenerBean.getConnectors(false)) {
       reset(connector.getProtocolHandler());
     }
