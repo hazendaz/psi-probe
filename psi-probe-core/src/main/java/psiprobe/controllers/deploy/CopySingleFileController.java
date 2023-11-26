@@ -63,7 +63,7 @@ public class CopySingleFileController extends AbstractTomcatContainerController 
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     // If not multi-part content, exit
     if (!this.isMultipartContent(request)) {

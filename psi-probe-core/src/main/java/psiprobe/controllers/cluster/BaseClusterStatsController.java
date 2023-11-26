@@ -11,6 +11,11 @@
 package psiprobe.controllers.cluster;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -92,7 +97,8 @@ public class BaseClusterStatsController extends AbstractTomcatContainerControlle
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws MalformedObjectNameException, InstanceNotFoundException,
+      AttributeNotFoundException, ReflectionException, MBeanException {
 
     TomcatContainer container = getContainerWrapper().getTomcatContainer();
     Cluster cluster = getClusterWrapper().getCluster(container.getName(), container.getHostName(),

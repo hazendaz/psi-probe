@@ -25,7 +25,7 @@ public class BaseReloadContextController extends AbstractNoSelfContextHandlerCon
   private static final Logger logger = LoggerFactory.getLogger(BaseReloadContextController.class);
 
   @Override
-  protected void executeAction(String contextName) throws Exception {
+  protected void executeAction(String contextName) {
     Context context = getContainerWrapper().getTomcatContainer().findContext(contextName);
     if (context != null) {
       context.reload();
