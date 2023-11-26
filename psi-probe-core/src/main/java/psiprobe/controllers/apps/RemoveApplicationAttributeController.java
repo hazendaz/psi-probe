@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.apache.catalina.Context;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,7 +39,8 @@ public class RemoveApplicationAttributeController extends AbstractContextHandler
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response)
+      throws ServletRequestBindingException {
 
     String attrName = ServletRequestUtils.getStringParameter(request, "attr");
     context.getServletContext().removeAttribute(attrName);

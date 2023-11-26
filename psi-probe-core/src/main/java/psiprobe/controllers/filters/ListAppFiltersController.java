@@ -40,7 +40,7 @@ public class ListAppFiltersController extends AbstractContextHandlerController {
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
 
     List<FilterInfo> appFilters =
         ApplicationUtils.getApplicationFilters(context, getContainerWrapper());

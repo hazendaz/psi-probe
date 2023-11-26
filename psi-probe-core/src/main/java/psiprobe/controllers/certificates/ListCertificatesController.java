@@ -22,7 +22,10 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,7 +68,7 @@ public class ListCertificatesController extends AbstractTomcatContainerControlle
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     ModelAndView modelAndView = new ModelAndView(getViewName());
 
@@ -113,13 +116,13 @@ public class ListCertificatesController extends AbstractTomcatContainerControlle
    * @param storeType the store type
    * @param storeFile the store file
    * @param storePassword the store password
-   *
    * @return the certificates
-   *
-   * @throws Exception the exception
+   * @throws KeyStoreException the key store exception
+   * @throws NoSuchAlgorithmException the no such algorithm exception
+   * @throws CertificateException the certificate exception
    */
   public List<Cert> getCertificates(String storeType, String storeFile, String storePassword)
-      throws Exception {
+      throws KeyStoreException, NoSuchAlgorithmException, CertificateException {
     KeyStore keyStore;
 
     // Get key store

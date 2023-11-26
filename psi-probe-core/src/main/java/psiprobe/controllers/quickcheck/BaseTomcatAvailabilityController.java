@@ -24,6 +24,8 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.apache.catalina.Context;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -62,7 +64,7 @@ public class BaseTomcatAvailabilityController extends AbstractTomcatContainerCon
 
   @Override
   public ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws NamingException, IOException {
 
     final long start = System.currentTimeMillis();
     TomcatTestReport tomcatTestReport = new TomcatTestReport();

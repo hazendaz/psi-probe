@@ -13,6 +13,8 @@ package psiprobe.controllers.sessions;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.Manager;
 import org.apache.catalina.Session;
@@ -41,7 +43,7 @@ public class ExpireSessionsController extends AbstractTomcatContainerController 
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws IOException {
 
     for (String sidWebApp : ServletRequestUtils.getStringParameters(request, "sid_webapp")) {
       if (sidWebApp != null) {

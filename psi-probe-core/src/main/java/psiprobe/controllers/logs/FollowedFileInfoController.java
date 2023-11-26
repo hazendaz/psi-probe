@@ -35,7 +35,7 @@ public class FollowedFileInfoController extends AbstractLogHandlerController {
 
   @Override
   protected ModelAndView handleLogFile(HttpServletRequest request, HttpServletResponse response,
-      LogDestination logDest) throws Exception {
+      LogDestination logDest) {
     return new ModelAndView(getViewName()).addObject("log", logDest);
   }
 

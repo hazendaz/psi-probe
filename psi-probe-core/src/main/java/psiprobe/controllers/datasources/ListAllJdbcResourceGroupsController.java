@@ -18,6 +18,8 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import javax.naming.NamingException;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +45,7 @@ public class ListAllJdbcResourceGroupsController extends AbstractTomcatContainer
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws NamingException {
 
     List<DataSourceInfoGroup> dataSourceGroups = new ArrayList<>();
     List<DataSourceInfo> dataSources = new ArrayList<>();

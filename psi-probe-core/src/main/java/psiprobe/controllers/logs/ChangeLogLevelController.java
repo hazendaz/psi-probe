@@ -17,6 +17,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,7 +46,7 @@ public class ChangeLogLevelController extends AbstractLogHandlerController {
 
   @Override
   protected ModelAndView handleLogFile(HttpServletRequest request, HttpServletResponse response,
-      LogDestination logDest) throws Exception {
+      LogDestination logDest) throws ServletRequestBindingException {
 
     String level = ServletRequestUtils.getRequiredStringParameter(request, "level");
     if (Arrays.asList(logDest.getValidLevels()).contains(level)) {

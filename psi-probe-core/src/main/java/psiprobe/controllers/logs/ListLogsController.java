@@ -85,7 +85,7 @@ public class ListLogsController extends ParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     boolean showAll = ServletRequestUtils.getBooleanParameter(request, "apps", false);
     List<LogDestination> uniqueList = logResolver.getLogDestinations(showAll);

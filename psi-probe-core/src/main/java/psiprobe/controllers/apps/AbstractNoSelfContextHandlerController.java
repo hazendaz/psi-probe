@@ -55,7 +55,7 @@ public abstract class AbstractNoSelfContextHandlerController
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
 
     try {
       if (request.getContextPath().equals(contextName)) {
