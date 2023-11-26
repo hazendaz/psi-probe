@@ -11,6 +11,11 @@
 package psiprobe.beans.stats.collectors;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -70,7 +75,8 @@ public class ClusterStatsCollectorBean extends AbstractStatsCollectorBean {
   }
 
   @Override
-  public void collect() throws Exception {
+  public void collect() throws InterruptedException, MalformedObjectNameException,
+      InstanceNotFoundException, AttributeNotFoundException, ReflectionException, MBeanException {
     // Job can be called before the servlet finished initialization. Make sure
     // we don't get an NPE.
     TomcatContainer container = containerWrapper.getTomcatContainer();

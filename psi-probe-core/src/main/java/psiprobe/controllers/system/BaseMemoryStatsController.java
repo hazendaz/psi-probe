@@ -11,6 +11,11 @@
 package psiprobe.controllers.system;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,7 +74,8 @@ public class BaseMemoryStatsController extends ParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws InstanceNotFoundException, MalformedObjectNameException,
+      AttributeNotFoundException, ReflectionException, MBeanException {
 
     ModelAndView mv = new ModelAndView(getViewName());
     mv.addObject("pools", getJvmMemoryInfoAccessorBean().getPools());

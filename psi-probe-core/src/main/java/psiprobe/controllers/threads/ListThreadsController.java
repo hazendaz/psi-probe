@@ -43,7 +43,7 @@ public class ListThreadsController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     /*
      * Create a list of webapp classloaders. This will help us to associate threads with
