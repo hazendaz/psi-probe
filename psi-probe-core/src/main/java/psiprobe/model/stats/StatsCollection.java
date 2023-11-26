@@ -368,7 +368,7 @@ public class StatsCollection implements InitializingBean, DisposableBean, Applic
   }
 
   @Override
-  public void destroy() throws Exception {
+  public void destroy() throws InterruptedException {
     serialize();
   }
 

@@ -31,15 +31,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.naming.NamingException;
 
 import org.apache.catalina.Container;
 import org.apache.catalina.Context;
 import org.apache.catalina.Engine;
 import org.apache.catalina.Host;
+import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Service;
 import org.apache.catalina.Valve;
 import org.apache.catalina.Wrapper;
@@ -170,14 +174,15 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
   }
 
   @Override
-  public boolean installContext(String contextName) throws Exception {
+  public boolean installContext(String contextName)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     contextName = formatContextName(contextName);
     installContextInternal(contextName);
     return findContext(contextName) != null;
   }
 
   @Override
-  public void stop(String name) throws Exception {
+  public void stop(String name) throws LifecycleException {
     Context ctx = findContext(name);
     if (ctx != null) {
       ctx.stop();
@@ -185,7 +190,7 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
   }
 
   @Override
-  public void start(String name) throws Exception {
+  public void start(String name) throws LifecycleException {
     Context ctx = findContext(name);
     if (ctx != null) {
       ctx.start();
@@ -193,7 +198,8 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
   }
 
   @Override
-  public void remove(String name) throws Exception {
+  public void remove(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     name = formatContextName(name);
     Context ctx = findContext(name);
 
@@ -240,15 +246,18 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
    * Removes the internal.
    *
    * @param name the name
-   *
-   * @throws Exception the exception
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws InstanceNotFoundException
    */
-  private void removeInternal(String name) throws Exception {
+  private void removeInternal(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     checkChanges(name);
   }
 
   @Override
-  public void installWar(String name) throws Exception {
+  public void installWar(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     checkChanges(name);
   }
 
@@ -256,10 +265,12 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
    * Install context internal.
    *
    * @param name the name
-   *
-   * @throws Exception the exception
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws InstanceNotFoundException
    */
-  private void installContextInternal(String name) throws Exception {
+  private void installContextInternal(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     checkChanges(name);
   }
 
@@ -611,10 +622,12 @@ public abstract class AbstractTomcatContainer implements TomcatContainer {
    * Check changes.
    *
    * @param name the name
-   *
-   * @throws Exception the exception
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws InstanceNotFoundException
    */
-  protected void checkChanges(String name) throws Exception {
+  protected void checkChanges(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     Boolean result = (Boolean) mbeanServer.invoke(objectNameDeployer, "tryAddServiced",
         new String[] {name}, new String[] {String.class.getName()});
     if (result.booleanValue()) {

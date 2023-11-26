@@ -36,7 +36,7 @@ public class AjaxUptimeController extends ParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
     long uptimeStartValue = ManagementFactory.getRuntimeMXBean().getStartTime();
     long uptime = System.currentTimeMillis() - uptimeStartValue;
     long uptimeDays = uptime / (1000 * 60 * 60 * 24);

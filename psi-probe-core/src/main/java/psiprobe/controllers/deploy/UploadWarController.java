@@ -21,6 +21,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.Duration;
 
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.ReflectionException;
+
 import org.apache.catalina.Context;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.file.PathUtils;
@@ -62,7 +66,8 @@ public class UploadWarController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response)
+      throws InstanceNotFoundException, ReflectionException, MBeanException {
     return new ModelAndView(new InternalResourceView(getViewName()));
   }
 

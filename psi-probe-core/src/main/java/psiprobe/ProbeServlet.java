@@ -16,6 +16,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import org.apache.catalina.ContainerServlet;
@@ -76,13 +77,16 @@ public class ProbeServlet extends DispatcherServlet implements ContainerServlet 
    * @param httpServletRequest the request
    * @param httpServletResponse the response
    *
-   * @throws Exception if setting UTF-8 encoding fails or if the super implementation throws an
-   *         exception
+   * @throws Exception if the super implementation throws an exception
    */
   @Override
   protected void doDispatch(HttpServletRequest httpServletRequest,
       HttpServletResponse httpServletResponse) throws Exception {
-    httpServletRequest.setCharacterEncoding(StandardCharsets.UTF_8.name());
+    try {
+      httpServletRequest.setCharacterEncoding(StandardCharsets.UTF_8.name());
+    } catch (UnsupportedEncodingException e) {
+      logger.error("UTF_8 encoding missing", e);
+    }
     super.doDispatch(httpServletRequest, httpServletResponse);
   }
 

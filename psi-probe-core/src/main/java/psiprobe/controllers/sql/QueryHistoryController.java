@@ -39,7 +39,7 @@ public class QueryHistoryController extends PostParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     HttpSession sess = request.getSession(false);
     List<String> queryHistory = null;

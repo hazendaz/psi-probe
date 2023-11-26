@@ -15,9 +15,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.ReflectionException;
 import javax.naming.NamingException;
 
 import org.apache.catalina.Context;
+import org.apache.catalina.LifecycleException;
 import org.apache.catalina.Wrapper;
 import org.apache.catalina.connector.Connector;
 
@@ -80,19 +84,17 @@ public interface TomcatContainer {
    * Stops the context with the given name.
    *
    * @param name the name of the context to stop
-   *
-   * @throws Exception if stopping the context fails spectacularly
+   * @throws LifecycleException the lifecycle exception
    */
-  void stop(String name) throws Exception;
+  void stop(String name) throws LifecycleException;
 
   /**
    * Starts the context with the given name.
    *
    * @param name the name of the context to start
-   *
-   * @throws Exception if starting the context fails spectacularly
+   * @throws LifecycleException the lifecycle exception
    */
-  void start(String name) throws Exception;
+  void start(String name) throws LifecycleException;
 
   /**
    * Undeploys a context.
@@ -101,7 +103,7 @@ public interface TomcatContainer {
    *
    * @throws Exception if undeployment fails spectacularly
    */
-  void remove(String name) throws Exception;
+  void remove(String name) throws InstanceNotFoundException, ReflectionException, MBeanException;
 
   /**
    * Installs .war file at the given context name.
@@ -110,7 +112,8 @@ public interface TomcatContainer {
    *
    * @throws Exception if installing the .war fails spectacularly
    */
-  void installWar(String name) throws Exception;
+  void installWar(String name)
+      throws InstanceNotFoundException, ReflectionException, MBeanException;
 
   /**
    * This method always returns absolute path, no matter what Tomcat is up to.

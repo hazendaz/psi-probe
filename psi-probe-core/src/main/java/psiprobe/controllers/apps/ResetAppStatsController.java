@@ -28,7 +28,7 @@ public class ResetAppStatsController extends AbstractNoSelfContextHandlerControl
   private AppStatsCollectorBean statsCollector;
 
   @Override
-  protected void executeAction(String contextName) throws Exception {
+  protected void executeAction(String contextName) {
     statsCollector.reset(contextName);
   }
 

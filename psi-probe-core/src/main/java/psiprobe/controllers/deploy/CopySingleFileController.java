@@ -60,7 +60,7 @@ public class CopySingleFileController extends AbstractTomcatContainerController 
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
     return new ModelAndView(new InternalResourceView(getViewName()));
   }
 

@@ -28,7 +28,7 @@ public class RuntimeStatsCollectorBean extends AbstractStatsCollectorBean {
   private RuntimeInfoAccessorBean runtimeInfoAccessorBean;
 
   @Override
-  public void collect() throws Exception {
+  public void collect() throws InterruptedException {
     RuntimeInformation ri = runtimeInfoAccessorBean.getRuntimeInformation();
     if (ri != null) {
       long time = System.currentTimeMillis();

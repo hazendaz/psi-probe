@@ -13,10 +13,14 @@ package psiprobe.beans;
 import java.lang.management.ManagementFactory;
 import java.util.Set;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 
 import psiprobe.model.jmx.AsyncClusterSender;
 import psiprobe.model.jmx.Cluster;
@@ -38,11 +42,16 @@ public class ClusterWrapperBean {
    * @param loadMembers the load members
    *
    * @return the cluster
+   * @throws MalformedObjectNameException
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws InstanceNotFoundException
+   * @throws AttributeNotFoundException
    *
-   * @throws MalformedObjectNameException the malformed object name exception
    */
   public Cluster getCluster(String serverName, String hostName, boolean loadMembers)
-      throws MalformedObjectNameException {
+      throws MalformedObjectNameException, InstanceNotFoundException, ReflectionException,
+      MBeanException, AttributeNotFoundException {
 
     Cluster cluster = null;
 

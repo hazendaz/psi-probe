@@ -13,10 +13,13 @@ package psiprobe.controllers.sessions;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.IOException;
+
 import org.apache.catalina.Context;
 import org.apache.catalina.Session;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -39,7 +42,8 @@ public class ExpireSessionController extends AbstractContextHandlerController {
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response)
+      throws ServletRequestBindingException, IOException {
 
     String sessionId = ServletRequestUtils.getStringParameter(request, "sid");
     Session session = context.getManager().findSession(sessionId);

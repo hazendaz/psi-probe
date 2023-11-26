@@ -62,7 +62,7 @@ public class StopJvmController extends PostParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     boolean done = false;
     try {
