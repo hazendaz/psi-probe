@@ -11,6 +11,7 @@
 package psiprobe.controllers.apps;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
 
 import javax.servlet.ServletContext;
@@ -63,7 +64,7 @@ public class BaseDownloadXmlConfController extends AbstractContextHandlerControl
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     if (downloadTarget == null) {
       throw new RuntimeException("Download target is not set for " + getClass().getName());

@@ -14,9 +14,13 @@ import java.lang.management.ManagementFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
 import javax.management.MBeanServer;
 import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.management.openmbean.CompositeData;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,7 +74,8 @@ public class ThreadStackController extends ParameterizableViewController {
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
       HttpServletResponse response)
-      throws ServletRequestBindingException, MalformedObjectNameException {
+      throws ServletRequestBindingException, MalformedObjectNameException,
+      InstanceNotFoundException, AttributeNotFoundException, ReflectionException, MBeanException {
 
     long threadId = ServletRequestUtils.getLongParameter(request, "id", -1);
     String threadName = ServletRequestUtils.getStringParameter(request, "name");

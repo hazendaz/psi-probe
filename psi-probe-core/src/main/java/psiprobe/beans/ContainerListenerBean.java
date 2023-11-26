@@ -13,10 +13,13 @@ package psiprobe.beans;
 import com.maxmind.db.CHMCache;
 import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.AddressNotFoundException;
+import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.Country;
 
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,7 +29,10 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
 import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanException;
 import javax.management.MBeanServer;
 import javax.management.MBeanServerNotification;
 import javax.management.MalformedObjectNameException;
@@ -34,6 +40,7 @@ import javax.management.Notification;
 import javax.management.NotificationListener;
 import javax.management.ObjectInstance;
 import javax.management.ObjectName;
+import javax.management.ReflectionException;
 import javax.management.RuntimeOperationsException;
 
 import org.slf4j.Logger;
@@ -206,10 +213,10 @@ public class ContainerListenerBean implements NotificationListener {
    * Gets the thread pools.
    *
    * @return the thread pools
-   *
-   * @throws Exception the exception
+   * @throws InstanceNotFoundException
+   * @throws MalformedObjectNameException
    */
-  public synchronized List<ThreadPool> getThreadPools() throws Exception {
+  public synchronized List<ThreadPool> getThreadPools() throws MalformedObjectNameException, InstanceNotFoundException {
     if (!isInitialized()) {
       initialize();
     }
@@ -241,12 +248,14 @@ public class ContainerListenerBean implements NotificationListener {
         threadPool.setMinSpareThreads(JmxTools.getIntAttr(server, poolName, "minSpareThreads"));
       }
 
-      threadPool.setCurrentThreadsBusy(JmxTools.getIntAttr(server, poolName, "currentThreadsBusy"));
-      threadPool.setCurrentThreadCount(JmxTools.getIntAttr(server, poolName, "currentThreadCount"));
+      threadPool
+          .setCurrentThreadsBusy(JmxTools.getIntAttr(server, poolName, "currentThreadsBusy"));
+      threadPool
+          .setCurrentThreadCount(JmxTools.getIntAttr(server, poolName, "currentThreadCount"));
 
       /*
-       * Tomcat will return -1 for maxThreads if the connector uses an executor for its threads. In
-       * this case, don't add its ThreadPool to the results.
+       * Tomcat will return -1 for maxThreads if the connector uses an executor for its threads.
+       * In this case, don't add its ThreadPool to the results.
        */
       if (threadPool.getMaxThreads() > -1) {
         threadPools.add(threadPool);
@@ -260,10 +269,10 @@ public class ContainerListenerBean implements NotificationListener {
    *
    * @param operation the operation
    * @param port the port
-   *
-   * @throws Exception the exception
+   * @throws MalformedObjectNameException
    */
-  public synchronized void toggleConnectorStatus(String operation, String port) throws Exception {
+  public synchronized void toggleConnectorStatus(String operation, String port)
+      throws MalformedObjectNameException {
 
     if (!allowedOperation.contains(operation)) {
       logger.error("operation {} not supported", operation);
@@ -285,11 +294,22 @@ public class ContainerListenerBean implements NotificationListener {
    * @param includeRequestProcessors the include request processors
    *
    * @return the connectors
+   * @throws MBeanException
+   * @throws ReflectionException
+   * @throws MalformedObjectNameException
+   * @throws AttributeNotFoundException
+   * @throws URISyntaxException
+   * @throws IOException
+   * @throws InstanceNotFoundException
+   * @throws IntrospectionException
+   * @throws GeoIp2Exception
    *
    * @throws Exception the exception
    */
   public synchronized List<Connector> getConnectors(boolean includeRequestProcessors)
-      throws Exception {
+      throws ReflectionException, MBeanException, MalformedObjectNameException,
+      AttributeNotFoundException, IOException, URISyntaxException, InstanceNotFoundException,
+      IntrospectionException, GeoIp2Exception {
 
     boolean workerThreadNameSupported = true;
 
