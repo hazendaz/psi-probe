@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +63,7 @@ public class BaseTomcatAvailabilityController extends AbstractTomcatContainerCon
 
   @Override
   public ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws NamingException, IOException {
 
     final long start = System.currentTimeMillis();
     TomcatTestReport tomcatTestReport = new TomcatTestReport();

@@ -47,7 +47,7 @@ public class CachedRecordSetController extends PostParameterizableViewController
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     int rowsPerPage = ServletRequestUtils.getIntParameter(request, "rowsPerPage", 0);
     List<Map<String, String>> results = null;

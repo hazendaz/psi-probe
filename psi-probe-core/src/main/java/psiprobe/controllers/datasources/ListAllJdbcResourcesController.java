@@ -12,6 +12,7 @@ package psiprobe.controllers.datasources;
 
 import java.util.List;
 
+import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -38,7 +39,7 @@ public class ListAllJdbcResourcesController extends AbstractTomcatContainerContr
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse httpServletResponse) throws Exception {
+      HttpServletResponse httpServletResponse) throws NamingException {
 
     boolean supportsGlobal = getContainerWrapper().getResourceResolver().supportsGlobalResources();
     boolean supportsPrivate =

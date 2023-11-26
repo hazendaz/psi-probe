@@ -13,6 +13,12 @@ package psiprobe.controllers.threads;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.IntrospectionException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -62,7 +68,8 @@ public class ListThreadPoolsController extends AbstractTomcatContainerController
 
   @Override
   public ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws InstanceNotFoundException, AttributeNotFoundException,
+      IntrospectionException, MalformedObjectNameException, ReflectionException, MBeanException {
 
     List<ThreadPool> pools = containerListenerBean.getThreadPools();
     return new ModelAndView(getViewName()).addObject("pools", pools);

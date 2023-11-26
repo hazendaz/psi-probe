@@ -10,6 +10,7 @@
  */
 package psiprobe.controllers.sql;
 
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class QueryHistoryItemController extends AbstractController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws IOException {
 
     int sqlId = ServletRequestUtils.getIntParameter(request, "sqlId", -1);
 

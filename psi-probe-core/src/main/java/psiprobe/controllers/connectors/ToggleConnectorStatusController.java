@@ -11,6 +11,7 @@
 package psiprobe.controllers.connectors;
 
 import javax.inject.Inject;
+import javax.management.MalformedObjectNameException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -72,7 +74,8 @@ public class ToggleConnectorStatusController extends ParameterizableViewControll
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response)
+      throws ServletRequestBindingException, MalformedObjectNameException {
 
     String connectorName = ServletRequestUtils.getRequiredStringParameter(request, "cn");
 
