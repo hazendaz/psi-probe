@@ -64,7 +64,7 @@ public class AdviseGarbageCollectionController extends ParameterizableViewContro
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     boolean finalization = ServletRequestUtils.getBooleanParameter(request, "fin", false);
 

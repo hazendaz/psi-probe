@@ -55,7 +55,7 @@ public class BaseUndeployContextController extends AbstractContextHandlerControl
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
     try {
       if (request.getContextPath().equals(contextName)) {
         throw new IllegalStateException(
@@ -83,10 +83,8 @@ public class BaseUndeployContextController extends AbstractContextHandlerControl
    * Execute action.
    *
    * @param contextName the context name
-   *
-   * @throws Exception the exception
    */
-  protected void executeAction(String contextName) throws Exception {
+  protected void executeAction(String contextName) {
     // Not Implemented
   }
 

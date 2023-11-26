@@ -54,7 +54,7 @@ public class DataSourceTestController extends ParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     HttpSession sess = request.getSession(false);
 

@@ -38,7 +38,7 @@ public class ListAppInitParamsController extends AbstractContextHandlerControlle
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
 
     ModelAndView mv = new ModelAndView(getViewName(), "appInitParams",
         ApplicationUtils.getApplicationInitParams(context, getContainerWrapper()));

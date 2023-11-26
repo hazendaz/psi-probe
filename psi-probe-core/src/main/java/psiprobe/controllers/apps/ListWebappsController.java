@@ -43,7 +43,7 @@ public class ListWebappsController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     boolean calcSize = ServletRequestUtils.getBooleanParameter(request, "size", false)
         && SecurityUtils.hasAttributeValueRole(getServletContext());

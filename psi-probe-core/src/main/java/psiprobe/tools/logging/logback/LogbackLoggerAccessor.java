@@ -12,6 +12,7 @@ package psiprobe.tools.logging.logback;
 
 import com.google.common.collect.Iterators;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -144,11 +145,13 @@ public class LogbackLoggerAccessor extends DefaultAccessor {
    * @param appender the appender
    *
    * @return the sifted appenders
-   *
-   * @throws Exception the exception
+   * @throws InvocationTargetException
+   * @throws IllegalAccessException
+   * @throws NoSuchMethodException
    */
   @SuppressWarnings("unchecked")
-  private List<Object> getSiftedAppenders(Object appender) throws Exception {
+  private List<Object> getSiftedAppenders(Object appender)
+      throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
     if ("ch.qos.logback.classic.sift.SiftingAppender".equals(appender.getClass().getName())) {
       Object tracker = MethodUtils.invokeMethod(appender, "getAppenderTracker");
       if (tracker != null) {

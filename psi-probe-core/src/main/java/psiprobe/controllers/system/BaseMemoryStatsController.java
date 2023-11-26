@@ -14,6 +14,12 @@ import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.management.AttributeNotFoundException;
+import javax.management.InstanceNotFoundException;
+import javax.management.MBeanException;
+import javax.management.MalformedObjectNameException;
+import javax.management.ReflectionException;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
@@ -69,7 +75,8 @@ public class BaseMemoryStatsController extends ParameterizableViewController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) throws InstanceNotFoundException, MalformedObjectNameException,
+      AttributeNotFoundException, ReflectionException, MBeanException {
 
     ModelAndView mv = new ModelAndView(getViewName());
     mv.addObject("pools", getJvmMemoryInfoAccessorBean().getPools());

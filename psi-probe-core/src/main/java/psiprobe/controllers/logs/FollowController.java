@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -41,7 +42,7 @@ public class FollowController extends AbstractLogHandlerController {
 
   @Override
   protected ModelAndView handleLogFile(HttpServletRequest request, HttpServletResponse response,
-      LogDestination logDest) throws Exception {
+      LogDestination logDest) throws IOException {
 
     ModelAndView mv = new ModelAndView(getViewName());
     File file = logDest.getFile();

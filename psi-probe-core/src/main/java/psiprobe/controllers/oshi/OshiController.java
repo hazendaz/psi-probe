@@ -108,7 +108,7 @@ public class OshiController extends AbstractTomcatContainerController {
 
   @Override
   protected ModelAndView handleRequestInternal(HttpServletRequest request,
-      HttpServletResponse response) throws Exception {
+      HttpServletResponse response) {
 
     if (!oshi.isEmpty()) {
       ModelAndView mv = new ModelAndView(getViewName());

@@ -43,7 +43,7 @@ public class ListServletsController extends AbstractContextHandlerController {
 
   @Override
   protected ModelAndView handleContext(String contextName, Context context,
-      HttpServletRequest request, HttpServletResponse response) throws Exception {
+      HttpServletRequest request, HttpServletResponse response) {
 
     List<Context> ctxs;
     if (context == null) {
