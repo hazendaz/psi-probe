@@ -24,9 +24,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
-import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
@@ -53,19 +53,32 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 public class ProbeSecurityConfig {
 
   /**
+   * Gets the security filter chain.
+   *
+   * @param http the http
+   * @return the security filter chain
+   * @throws Exception the exception
+   */
+  @Bean(name = "securityFilterChain")
+  public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
+    http.authorizeHttpRequests().requestMatchers(PathPatternRequestMatcher.withDefaults().matcher("/**"))
+        .permitAll().and()
+        .addFilter(securityContextHolderFilter(securityContextRepository())
+        .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
+        .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor());
+    return http.build();
+  }
+
+  /**
    * Gets the filter chain proxy.
    *
+   * @param http the http
    * @return the filter chain proxy
+   * @throws Exception the exception
    */
   @Bean(name = "filterChainProxy")
-  public FilterChainProxy getFilterChainProxy() {
-    SecurityFilterChain chain =
-        new DefaultSecurityFilterChain(PathPatternRequestMatcher.withDefaults().matcher("/**"),
-            securityContextHolderFilter(securityContextRepository()),
-            getJ2eePreAuthenticatedProcessingFilter(), getLogoutFilter(),
-            getExceptionTranslationFilter(), getAuthorizationFilter());
-
-    return new FilterChainProxy(chain);
+  public FilterChainProxy getFilterChainProxy(HttpSecurity http) throws Exception {
+    return new FilterChainProxy(getSecurityFilterChain(http));
   }
 
   /**
