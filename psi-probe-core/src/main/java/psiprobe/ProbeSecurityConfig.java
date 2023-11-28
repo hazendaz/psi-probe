@@ -73,7 +73,8 @@ public class ProbeSecurityConfig {
     http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/**")).permitAll().and()
         .addFilter(securityContextHolderFilter(securityContextRepository())
         .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
-        .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor());
+        .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor())
+        .securityContext((securityContext) -> securityContext.requireExplicitSave(true));
     return http.build();
   }
 
