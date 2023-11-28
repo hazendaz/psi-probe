@@ -17,17 +17,11 @@ import com.thoughtworks.xstream.security.PrimitiveTypePermission;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.TreeMap;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.access.AccessDecisionVoter;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.access.SecurityConfig;
-import org.springframework.security.access.vote.AffirmativeBased;
-import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -36,8 +30,6 @@ import org.springframework.security.core.authority.mapping.SimpleAttributes2Gran
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
-import org.springframework.security.web.access.intercept.DefaultFilterInvocationSecurityMetadataSource;
-import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -52,7 +44,6 @@ import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 
 /**
  * The Class ProbeSecurityConfig.
@@ -60,6 +51,39 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class ProbeSecurityConfig {
+
+  private final String[] levelOneRoles;
+  private final String[] levelTwoRoles;
+  private final String[] levelThreeRoles;
+  private final String[] levelFourRoles;
+
+  public ProbeSecurityConfig() {
+    // Load level four roles
+    List<String> levelFour = new ArrayList<>();
+    levelFour.add("MANAGER");
+    levelFour.add("MANAGER-GUI");
+
+    // Load level three roles includes level 4
+    List<String> levelThree = new ArrayList<>();
+    levelThree.add("POWERUSERPLUS");
+    levelThree.addAll(levelFour);
+
+    // Load level two roles includes level 3
+    List<String> levelTwo = new ArrayList<>();
+    levelTwo.add("POWERUSER");
+    levelTwo.addAll(levelThree);
+
+    // Load level one roles includes level 2
+    List<String> levelOne = new ArrayList<>();
+    levelOne.add("PROBEUSER");
+    levelOne.addAll(levelTwo);
+
+    // Initialize role arrays
+    levelOneRoles = levelOne.toArray(new String[0]);
+    levelTwoRoles = levelTwo.toArray(new String[0]);
+    levelThreeRoles = levelThree.toArray(new String[0]);
+    levelFourRoles = levelFour.toArray(new String[0]);
+  }
 
   /**
    * Gets the security filter chain.
@@ -70,11 +94,16 @@ public class ProbeSecurityConfig {
    */
   @Bean(name = "securityFilterChain")
   public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/**")).permitAll().and()
+    http.authorizeHttpRequests(request -> request
+        .requestMatchers(new AntPathRequestMatcher("/adm/**")).hasAnyRole(levelFourRoles)
+        .requestMatchers(new AntPathRequestMatcher("/adm/restartvm.ajax"))
+        .hasAnyRole(levelThreeRoles).requestMatchers(new AntPathRequestMatcher("/sql/**"))
+        .hasAnyRole(levelThreeRoles).requestMatchers(new AntPathRequestMatcher("/app/**"))
+        .hasAnyRole(levelTwoRoles).requestMatchers(new AntPathRequestMatcher("/**"))
+        .hasAnyRole(levelOneRoles).anyRequest().authenticated())
         .addFilter(securityContextHolderFilter(securityContextRepository())
         .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
-        .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor())
-        .securityContext((securityContext) -> securityContext.requireExplicitSave(true));
+        .addFilter(getExceptionTranslationFilter());
     return http.build();
   }
 
@@ -237,61 +266,6 @@ public class ProbeSecurityConfig {
   @Bean(name = "exceptionTranslationFilter")
   public ExceptionTranslationFilter getExceptionTranslationFilter() {
     return new ExceptionTranslationFilter(getHttp403ForbiddenEntryPoint());
-  }
-
-  /**
-   * Gets the affirmative based.
-   *
-   * @return the affirmative based
-   */
-  @Bean(name = "affirmativeBased")
-  public AffirmativeBased getAffirmativeBased() {
-    List<AccessDecisionVoter<? extends Object>> decisionVoters = new ArrayList<>();
-    decisionVoters.add(getRoleVoter());
-
-    AffirmativeBased based = new AffirmativeBased(decisionVoters);
-    based.setAllowIfAllAbstainDecisions(false);
-    return based;
-  }
-
-  /**
-   * Gets the filter security interceptor.
-   *
-   * @return the filter security interceptor
-   */
-  @Bean(name = "filterSecurityInterceptor")
-  public FilterSecurityInterceptor getFilterSecurityInterceptor() {
-    FilterSecurityInterceptor interceptor = new FilterSecurityInterceptor();
-    interceptor.setAuthenticationManager(getProviderManager());
-    interceptor.setAccessDecisionManager(getAffirmativeBased());
-
-    LinkedHashMap<RequestMatcher, Collection<ConfigAttribute>> requestMap = new LinkedHashMap<>();
-    requestMap.put(new AntPathRequestMatcher("/adm/**"),
-        SecurityConfig.createListFromCommaDelimitedString("ROLE_MANAGER,ROLE_MANAGER-GUI"));
-    requestMap.put(new AntPathRequestMatcher("/adm/restartvm.ajax"), SecurityConfig
-        .createListFromCommaDelimitedString("ROLE_POWERUSERPLUS,ROLE_MANAGER,ROLE_MANAGER-GUI"));
-    requestMap.put(new AntPathRequestMatcher("/sql/**"), SecurityConfig
-        .createListFromCommaDelimitedString("ROLE_POWERUSERPLUS,ROLE_MANAGER,ROLE_MANAGER-GUI"));
-    requestMap.put(new AntPathRequestMatcher("/app/**"),
-        SecurityConfig.createListFromCommaDelimitedString(
-            "ROLE_POWERUSER,ROLE_POWERUSERPLUS,ROLE_MANAGER,ROLE_MANAGER-GUI"));
-    requestMap.put(new AntPathRequestMatcher("/**"),
-        SecurityConfig.createListFromCommaDelimitedString(
-            "ROLE_PROBEUSER,ROLE_POWERUSER,ROLE_POWERUSERPLUS,ROLE_MANAGER,ROLE_MANAGER-GUI"));
-
-    interceptor
-        .setSecurityMetadataSource(new DefaultFilterInvocationSecurityMetadataSource(requestMap));
-    return interceptor;
-  }
-
-  /**
-   * Gets the role voter.
-   *
-   * @return the role voter
-   */
-  @Bean(name = "roleVoter")
-  public RoleVoter getRoleVoter() {
-    return new RoleVoter();
   }
 
   /**
