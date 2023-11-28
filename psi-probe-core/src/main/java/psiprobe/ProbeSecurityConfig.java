@@ -52,6 +52,39 @@ import org.springframework.security.web.servlet.util.matcher.PathPatternRequestM
 @EnableWebSecurity
 public class ProbeSecurityConfig {
 
+  private final String[] levelOneRoles;
+  private final String[] levelTwoRoles;
+  private final String[] levelThreeRoles;
+  private final String[] levelFourRoles;
+
+  public ProbeSecurityConfig() {
+    // Load level four roles
+    List<String> levelFour = new ArrayList<>();
+    levelFour.add("MANAGER");
+    levelFour.add("MANAGER-GUI");
+
+    // Load level three roles includes level 4
+    List<String> levelThree = new ArrayList<>();
+    levelThree.add("POWERUSERPLUS");
+    levelThree.addAll(levelFour);
+
+    // Load level two roles includes level 3
+    List<String> levelTwo = new ArrayList<>();
+    levelTwo.add("POWERUSER");
+    levelTwo.addAll(levelThree);
+
+    // Load level one roles includes level 2
+    List<String> levelOne = new ArrayList<>();
+    levelOne.add("PROBEUSER");
+    levelOne.addAll(levelTwo);
+
+    // Initialize role arrays
+    levelOneRoles = levelOne.toArray(new String[0]);
+    levelTwoRoles = levelTwo.toArray(new String[0]);
+    levelThreeRoles = levelThree.toArray(new String[0]);
+    levelFourRoles = levelFour.toArray(new String[0]);
+  }
+
   /**
    * Gets the security filter chain.
    *
@@ -65,8 +98,7 @@ public class ProbeSecurityConfig {
         .permitAll().and()
         .addFilter(securityContextHolderFilter(securityContextRepository())
         .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
-        .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor())
-        .securityContext((securityContext) -> securityContext.requireExplicitSave(true));
+        .addFilter(getExceptionTranslationFilter());
     return http.build();
   }
 
