@@ -70,8 +70,10 @@ public class ProbeSecurityConfig {
    */
   @Bean(name = "securityFilterChain")
   public SecurityFilterChain getSecurityFilterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests().requestMatchers("/webjars/**").permitAll().anyRequest()
-        .authenticated().and().addFilter(securityContextHolderFilter(securityContextRepository())
+    http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/webjars/**"))
+        .permitAll();
+    http.authorizeHttpRequests().requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+        .anyRequest().authenticated().and().addFilter(securityContextHolderFilter(securityContextRepository())
         .addFilter(getJ2eePreAuthenticatedProcessingFilter()).addFilter(getLogoutFilter())
         .addFilter(getExceptionTranslationFilter()).addFilter(getFilterSecurityInterceptor());
     return http.build();
