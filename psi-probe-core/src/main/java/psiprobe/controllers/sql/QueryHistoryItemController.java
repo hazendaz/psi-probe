@@ -15,7 +15,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.nio.charset.StandardCharsets;
-import java.util.List;
+import java.util.Deque;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,11 +56,11 @@ public class QueryHistoryItemController extends AbstractController {
           (DataSourceTestInfo) sess.getAttribute(DataSourceTestInfo.DS_TEST_SESS_ATTR);
 
       if (sessData != null) {
-        List<String> queryHistory = sessData.getQueryHistory();
+        Deque<String> queryHistory = sessData.getQueryHistory();
 
         if (queryHistory != null) {
           try {
-            String sql = queryHistory.get(sqlId);
+            String sql = queryHistory.getFirst();
             response.setCharacterEncoding(StandardCharsets.UTF_8.name());
             response.getWriter().print(sql);
           } catch (IndexOutOfBoundsException e) {

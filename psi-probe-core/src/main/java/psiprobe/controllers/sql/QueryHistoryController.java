@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.util.List;
+import java.util.Deque;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -42,7 +42,7 @@ public class QueryHistoryController extends PostParameterizableViewController {
       HttpServletResponse response) throws Exception {
 
     HttpSession sess = request.getSession(false);
-    List<String> queryHistory = null;
+    Deque<String> queryHistory = null;
 
     if (sess != null) {
       DataSourceTestInfo sessData =
