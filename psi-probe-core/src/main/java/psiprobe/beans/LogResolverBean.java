@@ -21,7 +21,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -128,7 +127,7 @@ public class LogResolverBean {
     //
     // this list has to guarantee the order in which elements are added
     //
-    List<LogDestination> uniqueList = new LinkedList<>();
+    List<LogDestination> uniqueList = new ArrayList<>();
     AbstractLogComparator cmp = new LogDestinationComparator(all);
 
     Collections.sort(allAppenders, cmp);
@@ -149,7 +148,7 @@ public class LogResolverBean {
    * @return the log sources
    */
   public List<LogDestination> getLogSources(File logFile) {
-    List<LogDestination> filtered = new LinkedList<>();
+    List<LogDestination> filtered = new ArrayList<>();
     List<LogDestination> sources = getLogSources();
     for (LogDestination dest : sources) {
       if (logFile.equals(dest.getFile())) {
@@ -165,7 +164,7 @@ public class LogResolverBean {
    * @return the log sources
    */
   public List<LogDestination> getLogSources() {
-    List<LogDestination> sources = new LinkedList<>();
+    List<LogDestination> sources = new ArrayList<>();
 
     List<LogDestination> allAppenders = getAllLogDestinations();
     if (!allAppenders.isEmpty()) {

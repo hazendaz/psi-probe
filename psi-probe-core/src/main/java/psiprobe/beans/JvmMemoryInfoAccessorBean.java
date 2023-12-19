@@ -11,7 +11,7 @@
 package psiprobe.beans;
 
 import java.lang.management.ManagementFactory;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -53,7 +53,7 @@ public class JvmMemoryInfoAccessorBean {
     long totalUsed = 0;
     long totalCommitted = 0;
 
-    List<MemoryPool> memoryPools = new LinkedList<>();
+    List<MemoryPool> memoryPools = new ArrayList<>();
     for (ObjectInstance objectInstance : objectInstanceMemoryPools) {
       ObjectName objName = objectInstance.getObjectName();
       MemoryPool memoryPool = new MemoryPool();

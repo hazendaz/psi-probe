@@ -10,8 +10,8 @@
  */
 package psiprobe.beans.stats.listeners;
 
+import java.util.ArrayDeque;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 import psiprobe.Utils;
@@ -43,7 +43,7 @@ public abstract class AbstractFlapListener extends AbstractThresholdListener {
   private float defaultFlapHighWeight;
 
   /** The flaps. */
-  private final Map<String, LinkedList<Boolean>> flaps = new HashMap<>();
+  private final Map<String, ArrayDeque<Boolean>> flaps = new HashMap<>();
 
   /** The flapping states. */
   private final Map<String, Boolean> flappingStates = new HashMap<>();
@@ -170,13 +170,13 @@ public abstract class AbstractFlapListener extends AbstractThresholdListener {
    */
   protected float calculateStateTransitionPercentage(String name, boolean flapping) {
     int flapInterval = getFlapInterval(name);
-    LinkedList<Boolean> list = getFlaps(name);
+    ArrayDeque<Boolean> list = getFlaps(name);
     float lowWeight = getFlapLowWeight(name);
     float highWeight = getFlapHighWeight(name);
     float weightRange = highWeight - lowWeight;
     float result = 0;
     for (int i = list.size() - 1; i >= 0; i--) {
-      boolean thisFlap = list.get(i);
+      boolean thisFlap = list.getFirst();
       if (flapping != thisFlap) {
         float weight = lowWeight + weightRange * i / (flapInterval - 1);
         result += weight;
@@ -193,7 +193,7 @@ public abstract class AbstractFlapListener extends AbstractThresholdListener {
    */
   protected void addFlap(String name, boolean flap) {
     int flapInterval = getFlapInterval(name);
-    LinkedList<Boolean> list = getFlaps(name);
+    ArrayDeque<Boolean> list = getFlaps(name);
     Boolean value = flap;
     list.addLast(value);
     while (list.size() > flapInterval) {
@@ -234,8 +234,8 @@ public abstract class AbstractFlapListener extends AbstractThresholdListener {
    *
    * @return the flaps
    */
-  protected LinkedList<Boolean> getFlaps(String name) {
-    return flaps.computeIfAbsent(name, s -> new LinkedList<>());
+  protected ArrayDeque<Boolean> getFlaps(String name) {
+    return flaps.computeIfAbsent(name, s -> new ArrayDeque<>());
   }
 
   /**
