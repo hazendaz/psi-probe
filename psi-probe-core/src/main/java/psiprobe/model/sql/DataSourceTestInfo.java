@@ -11,7 +11,8 @@
 package psiprobe.model.sql;
 
 import java.io.Serializable;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class DataSourceTestInfo implements Serializable {
   private List<Map<String, String>> results;
 
   /** The query history. */
-  private final LinkedList<String> queryHistory;
+  private final Deque<String> queryHistory;
 
   /** The max rows. */
   private int maxRows;
@@ -45,7 +46,7 @@ public class DataSourceTestInfo implements Serializable {
    * DataSourceTestInfo Constructor.
    */
   public DataSourceTestInfo() {
-    queryHistory = new LinkedList<>();
+    queryHistory = new ArrayDeque<>();
   }
 
   /**
@@ -85,7 +86,7 @@ public class DataSourceTestInfo implements Serializable {
    *
    * @return the query history
    */
-  public List<String> getQueryHistory() {
+  public Deque<String> getQueryHistory() {
     return queryHistory;
   }
 

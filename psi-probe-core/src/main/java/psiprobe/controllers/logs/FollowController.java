@@ -14,7 +14,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.File;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -47,7 +48,7 @@ public class FollowController extends AbstractLogHandlerController {
     File file = logDest.getFile();
 
     if (file.exists()) {
-      LinkedList<String> lines = new LinkedList<>();
+      Deque<String> lines = new ArrayDeque<>();
       long actualLength = file.length();
       long lastKnownLength = ServletRequestUtils.getLongParameter(request, "lastKnownLength", 0);
       long currentLength =

@@ -20,7 +20,7 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -128,12 +128,12 @@ public class ExecuteSqlController extends AbstractContextHandlerController {
                 ResultSetMetaData metaData = rs.getMetaData();
 
                 while (rs.next() && (maxRows < 0 || results.size() < maxRows)) {
-                  Map<String, String> record = new LinkedHashMap<>();
+                  Map<String, String> recordMap = new HashMap<>();
 
                   for (int i = 1; i <= metaData.getColumnCount(); i++) {
                     String value = rs.getString(i);
 
-                    if (rs.wasNull()) {
+                    if (rs.wasNull() && getMessageSourceAccessor() != null) {
                       value = getMessageSourceAccessor()
                           .getMessage("probe.src.dataSourceTest.sql.null");
                     } else {
@@ -142,13 +142,13 @@ public class ExecuteSqlController extends AbstractContextHandlerController {
 
                     // Pad the keys of columns with existing labels so they are distinct
                     StringBuilder key = new StringBuilder(metaData.getColumnLabel(i));
-                    while (record.containsKey(key.toString())) {
+                    while (recordMap.containsKey(key.toString())) {
                       key.append(" ");
                     }
-                    record.put(HtmlUtils.htmlEscape(key.toString()), value);
+                    recordMap.put(HtmlUtils.htmlEscape(key.toString()), value);
                   }
 
-                  results.add(record);
+                  results.add(recordMap);
                 }
               }
 

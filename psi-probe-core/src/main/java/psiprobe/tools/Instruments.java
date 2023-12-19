@@ -13,10 +13,10 @@ package psiprobe.tools;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -74,10 +74,10 @@ public class Instruments {
   private Set<Object> processedObjects = new HashSet<>(2048);
 
   /** The this queue. */
-  private final List<Object> thisQueue = new LinkedList<>();
+  private final Deque<Object> thisQueue = new ArrayDeque<>();
 
   /** The next queue. */
-  private final List<Object> nextQueue = new LinkedList<>();
+  private final Deque<Object> nextQueue = new ArrayDeque<>();
 
   /** The class loader. */
   private ClassLoader classLoader;
