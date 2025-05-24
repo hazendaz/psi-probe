@@ -206,7 +206,7 @@ public final class ApplicationUtils {
             minTime = Math.min(minTime, sw.getMinTime());
           } else if (requestCount instanceof Integer result && result > 0) {
             // Tomcat 10
-            minTime = Math.min(minTime, sw.getMinTime());
+            minTime = Math.min((int) minTime, (int) sw.getMinTime());
           }
         }
         maxTime = Math.max(maxTime, sw.getMaxTime());
