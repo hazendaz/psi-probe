@@ -101,7 +101,9 @@ public class ProbeSecurityConfig {
    */
   @Bean
   public SecurityContextRepository securityContextRepository() {
-    return new HttpSessionSecurityContextRepository();
+    HttpSessionSecurityContextRepository repo = new HttpSessionSecurityContextRepository();
+    repo.setAllowSessionCreation(false);
+    return repo;
   }
 
   @Bean
