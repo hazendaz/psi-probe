@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
@@ -44,6 +45,7 @@ import org.springframework.security.web.context.HttpSessionSecurityContextReposi
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
+import org.springframework.security.web.session.SessionManagementFilter;
 
 /**
  * The Class ProbeSecurityConfig.
@@ -61,10 +63,9 @@ public class ProbeSecurityConfig {
   public FilterChainProxy getFilterChainProxy() {
     SecurityFilterChain chain =
         new DefaultSecurityFilterChain(PathPatternRequestMatcher.withDefaults().matcher("/**"),
-            securityContextHolderFilter(securityContextRepository()),
-            getJ2eePreAuthenticatedProcessingFilter(), getLogoutFilter(),
-            getExceptionTranslationFilter(), getAuthorizationFilter());
-
+        securityContextHolderFilter(securityContextRepository()), sessionManagementFilter(),
+        getJ2eePreAuthenticatedProcessingFilter(), getLogoutFilter(),
+        getExceptionTranslationFilter(), getAuthorizationFilter());
     return new FilterChainProxy(chain);
   }
 
@@ -101,6 +102,17 @@ public class ProbeSecurityConfig {
   @Bean
   public SecurityContextRepository securityContextRepository() {
     return new HttpSessionSecurityContextRepository();
+  }
+
+  @Bean
+  public SessionManagementFilter sessionManagementFilter() {
+    // IF_REQUIRED (default behavior) — only create sessions when explicitly needed
+    SessionCreationPolicy policy = SessionCreationPolicy.IF_REQUIRED;
+
+    SecurityContextRepository repo = securityContextRepository();
+
+    // This allows control over when a session is created
+    return new SessionManagementFilter(repo, new CustomSessionAuthenticationStrategy(policy));
   }
 
   /**
