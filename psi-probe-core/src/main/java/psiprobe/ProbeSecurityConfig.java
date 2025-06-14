@@ -31,6 +31,7 @@ import org.springframework.security.access.vote.RoleVoter;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.authority.mapping.SimpleAttributes2GrantedAuthoritiesMapper;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
@@ -51,6 +52,7 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+import org.springframework.security.web.session.SessionManagementFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -69,7 +71,7 @@ public class ProbeSecurityConfig {
   @Bean(name = "filterChainProxy")
   public FilterChainProxy getFilterChainProxy() {
     SecurityFilterChain chain = new DefaultSecurityFilterChain(new AntPathRequestMatcher("/**"),
-        securityContextHolderFilter(securityContextRepository()),
+        securityContextHolderFilter(securityContextRepository()), sessionManagementFilter(),
         getJ2eePreAuthenticatedProcessingFilter(), getLogoutFilter(),
         getExceptionTranslationFilter(), getFilterSecurityInterceptor());
     return new FilterChainProxy(chain);
@@ -108,6 +110,17 @@ public class ProbeSecurityConfig {
   @Bean
   public SecurityContextRepository securityContextRepository() {
     return new HttpSessionSecurityContextRepository();
+  }
+
+  @Bean
+  public SessionManagementFilter sessionManagementFilter() {
+    // IF_REQUIRED (default behavior) — only create sessions when explicitly needed
+    SessionCreationPolicy policy = SessionCreationPolicy.IF_REQUIRED;
+
+    SecurityContextRepository repo = securityContextRepository();
+
+    // This allows control over when a session is created
+    return new SessionManagementFilter(repo, new CustomSessionAuthenticationStrategy(policy));
   }
 
   /**
