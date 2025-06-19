@@ -24,6 +24,16 @@ import java.util.Map;
 
 import org.apache.catalina.Context;
 import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+import org.mockito.Mockito;
+
+import psiprobe.TomcatContainer;
+import psiprobe.model.ApplicationParam;
+import psiprobe.model.ApplicationResource;
+import psiprobe.model.DataSourceInfo;
+import psiprobe.model.FilterInfo;
+import psiprobe.model.FilterMapping;
+import psiprobe.model.jsp.Summary;
 
 import psiprobe.TomcatContainer;
 import psiprobe.model.ApplicationResource;
@@ -243,6 +253,54 @@ class ContainerWrapperBeanTest {
   }
 
   @Test
+  void testForceFirstAdapterProperty() {
+    assertFalse(bean.isForceFirstAdapter());
+    bean.setForceFirstAdapter(true);
+    assertTrue(bean.isForceFirstAdapter());
+  }
+
+  @Test
+  void testSetAndGetAdapterClasses() {
+    List<String> adapters = Arrays.asList("foo", "bar");
+    bean.setAdapterClasses(adapters);
+    assertEquals(adapters, bean.getAdapterClasses());
+  }
+
+  @Test
+  void testSetAndGetResourceResolvers() {
+    Map<String, ResourceResolver> resolvers = new HashMap<>();
+    bean.setResourceResolvers(resolvers);
+    assertEquals(resolvers, bean.getResourceResolvers());
+  }
+
+  @Test
+  void testGetResourceResolver_Default() {
+    ResourceResolver defaultResolver = mock(ResourceResolver.class);
+    Map<String, ResourceResolver> resolvers = new HashMap<>();
+    resolvers.put("default", defaultResolver);
+    bean.setResourceResolvers(resolvers);
+
+    // Should use default resolver if no jboss property
+    System.clearProperty("jboss.server.name");
+    assertSame(defaultResolver, bean.getResourceResolver());
+  }
+
+  @Test
+  void testGetResourceResolver_Jboss() {
+    ResourceResolver jbossResolver = mock(ResourceResolver.class);
+    Map<String, ResourceResolver> resolvers = new HashMap<>();
+    resolvers.put("jboss", jbossResolver);
+    bean.setResourceResolvers(resolvers);
+
+    System.setProperty("jboss.server.name", "test");
+    try {
+      assertSame(jbossResolver, bean.getResourceResolver());
+    } finally {
+      System.clearProperty("jboss.server.name");
+    }
+  }
+
+  @Test
   void getDataSourcesAggregatesPrivateAndGlobalDataSources() throws Exception {
     ContainerWrapperBean bean = new ContainerWrapperBean();
     ResourceResolver resolver = mock(ResourceResolver.class);
@@ -305,6 +363,113 @@ class ContainerWrapperBeanTest {
     Field field = ContainerWrapperBean.class.getDeclaredField("tomcatContainer");
     field.setAccessible(true);
     field.set(bean, container);
+  }
+
+  @Test
+  void testSetWrapper_AdapterSelection() throws Exception {
+    // Prepare a fake adapter class
+    String adapterClassName = "psiprobe.beans.FakeTomcatContainer";
+    List<String> adapters = Collections.singletonList(adapterClassName);
+    bean.setAdapterClasses(adapters);
+
+    // Register the fake class
+    try (MockedStatic<Class> classMock =
+        Mockito.mockStatic(Class.class, Mockito.CALLS_REAL_METHODS)) {
+      classMock.when(() -> Class.forName(adapterClassName))
+          .thenReturn((Class<?>) FakeTomcatContainer.class);
+
+      Wrapper wrapper = mock(Wrapper.class);
+      bean.setWrapper(wrapper);
+
+      TomcatContainer container = bean.getTomcatContainer();
+      assertNotNull(container);
+      assertTrue(container instanceof FakeTomcatContainer);
+      assertSame(wrapper, ((FakeTomcatContainer) container).wrapper);
+    }
+  }
+
+  @Test
+  void testSetWrapper_UnregistersAdapter() {
+    // Setup with a fake adapter
+    String adapterClassName = "psiprobe.beans.FakeTomcatContainer";
+    bean.setAdapterClasses(Collections.singletonList(adapterClassName));
+    try (MockedStatic<Class> classMock =
+        Mockito.mockStatic(Class.class, Mockito.CALLS_REAL_METHODS)) {
+      classMock.when(() -> Class.forName(adapterClassName))
+          .thenReturn((Class<?>) FakeTomcatContainer.class);
+
+      Wrapper wrapper = mock(Wrapper.class);
+      bean.setWrapper(wrapper);
+
+      // Now unregister
+      bean.setWrapper(null);
+      TomcatContainer container = bean.getTomcatContainer();
+      assertNotNull(container);
+      assertNull(((FakeTomcatContainer) container).wrapper);
+    }
+  }
+
+  @Test
+  void testGetPrivateDataSources_FiltersByDataSourceInfo() throws Exception {
+    TomcatContainer container = mock(TomcatContainer.class);
+    bean.setAdapterClasses(Collections.emptyList());
+    // Set tomcatContainer via reflection (since setWrapper is complex)
+    java.lang.reflect.Field f = ContainerWrapperBean.class.getDeclaredField("tomcatContainer");
+    f.setAccessible(true);
+    f.set(bean, container);
+
+    ResourceResolver resolver = mock(ResourceResolver.class);
+    when(resolver.supportsPrivateResources()).thenReturn(true);
+    bean.setResourceResolvers(Map.of("default", resolver));
+    java.lang.reflect.Field rr = ContainerWrapperBean.class.getDeclaredField("resourceResolver");
+    rr.setAccessible(true);
+    rr.set(bean, resolver);
+
+    Context ctx = mock(Context.class);
+    when(container.findContexts()).thenReturn(List.of(ctx));
+    ApplicationResource res1 = mock(ApplicationResource.class);
+    when(res1.getDataSourceInfo()).thenReturn(new DataSourceInfo());
+    ApplicationResource res2 = mock(ApplicationResource.class);
+    when(res2.getDataSourceInfo()).thenReturn(null);
+    when(resolver.getApplicationResources(ctx, bean)).thenReturn(List.of(res1, res2));
+
+    List<ApplicationResource> result = bean.getPrivateDataSources();
+    assertEquals(1, result.size());
+    assertSame(res1, result.get(0));
+  }
+
+  @Test
+  void testGetGlobalDataSources_FiltersByDataSourceInfo() throws Exception {
+    ResourceResolver resolver = mock(ResourceResolver.class);
+    when(resolver.supportsGlobalResources()).thenReturn(true);
+    bean.setResourceResolvers(Map.of("default", resolver));
+    java.lang.reflect.Field rr = ContainerWrapperBean.class.getDeclaredField("resourceResolver");
+    rr.setAccessible(true);
+    rr.set(bean, resolver);
+
+    ApplicationResource res1 = mock(ApplicationResource.class);
+    when(res1.getDataSourceInfo()).thenReturn(new DataSourceInfo());
+    ApplicationResource res2 = mock(ApplicationResource.class);
+    when(res2.getDataSourceInfo()).thenReturn(null);
+    when(resolver.getApplicationResources()).thenReturn(List.of(res1, res2));
+
+    List<ApplicationResource> result = bean.getGlobalDataSources();
+    assertEquals(1, result.size());
+    assertSame(res1, result.get(0));
+  }
+
+  @Test
+  void testGetDataSources_CombinesPrivateAndGlobal() throws Exception {
+    ContainerWrapperBean spyBean = spy(bean);
+    ApplicationResource priv = mock(ApplicationResource.class);
+    ApplicationResource glob = mock(ApplicationResource.class);
+    doReturn(List.of(priv)).when(spyBean).getPrivateDataSources();
+    doReturn(List.of(glob)).when(spyBean).getGlobalDataSources();
+
+    List<ApplicationResource> result = spyBean.getDataSources();
+    assertEquals(2, result.size());
+    assertTrue(result.contains(priv));
+    assertTrue(result.contains(glob));
   }
 
 }
