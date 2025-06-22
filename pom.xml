@@ -196,6 +196,7 @@
         <spotbugs.version>4.10.2</spotbugs.version>
         <spring.version>7.0.8</spring.version>
         <spring-security.version>6.5.11</spring-security.version>
+        <spring-session.version>3.5.7</spring-session.version>
         <text.version>1.15.0</text.version>
         <tomcat.version>10.1.55</tomcat.version>
         <tomee.version>10.1.5</tomee.version>
@@ -546,6 +547,12 @@
                 <version>${spring-security.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.session</groupId>
+                <artifactId>spring-session-core</artifactId>
+                <version>${spring-session.version}</version>
             </dependency>
 
             <!-- Geo IP -->
