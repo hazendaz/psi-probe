@@ -39,7 +39,7 @@ public class ApplicationSession {
   private Date lastAccessTime;
 
   /** The max idle time. */
-  private int maxIdleTime;
+  private long maxIdleTime;
 
   /** The valid. */
   private boolean valid;
@@ -148,7 +148,7 @@ public class ApplicationSession {
    *
    * @return the max idle time
    */
-  public int getMaxIdleTime() {
+  public long getMaxIdleTime() {
     return maxIdleTime;
   }
 
@@ -157,7 +157,7 @@ public class ApplicationSession {
    *
    * @param maxIdleTime the new max idle time
    */
-  public void setMaxIdleTime(int maxIdleTime) {
+  public void setMaxIdleTime(long maxIdleTime) {
     this.maxIdleTime = maxIdleTime;
   }
 
