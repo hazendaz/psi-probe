@@ -52,7 +52,7 @@ public class UploadWarController extends AbstractTomcatContainerController {
   private static final Logger logger = LoggerFactory.getLogger(UploadWarController.class);
 
   /** The Constant MAXSECONDS_WAITFOR_CONTEXT. */
-  private static final int MAXSECONDS_WAITFOR_CONTEXT = 10;
+  private static final int MAXSECONDS_WAITFOR_CONTEXT = 30;
 
   @GetMapping("/adm/war.htm")
   @Override
@@ -157,7 +157,7 @@ public class UploadWarController extends AbstractTomcatContainerController {
         // Wait few seconds for creating context dir to avoid empty context
         PathUtils.waitFor(destContext, Duration.ofSeconds(MAXSECONDS_WAITFOR_CONTEXT));
 
-        Context ctx = getContainerWrapper().getTomcatContainer().findContext(contextName);
+        Context ctx = this.findContext(contextName);
         if (ctx == null) {
           errMsg = getMessageSourceAccessor().getMessage("probe.src.deploy.war.notinstalled",
               new Object[] {visibleContextName});
@@ -212,6 +212,29 @@ public class UploadWarController extends AbstractTomcatContainerController {
   @Override
   public void setViewName(String viewName) {
     super.setViewName(viewName);
+  }
+
+  private Context findContext(String contextName) {
+    int maxTries = 5;
+    int tryCount = 0;
+    Context ctx = null;
+    while (tryCount < maxTries) {
+      ctx = getContainerWrapper().getTomcatContainer().findContext(contextName);
+      if (ctx != null) {
+        break;
+      }
+      tryCount++;
+      if (tryCount < maxTries) {
+        try {
+          // sleep 2 second between tries
+          Thread.sleep(2000);
+        } catch (InterruptedException ie) {
+          Thread.currentThread().interrupt();
+          break;
+        }
+      }
+    }
+    return ctx;
   }
 
 }
