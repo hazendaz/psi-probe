@@ -331,6 +331,75 @@ public final class ApplicationUtils {
   }
 
   /**
+   * Gets the application session.
+   *
+   * @param session the session
+   * @param calcSize the calc size
+   * @param addAttributes the add attributes
+   * @return the application session
+   */
+  public static ApplicationSession getApplicationSession(
+      org.springframework.session.Session session, boolean calcSize, boolean addAttributes) {
+    ApplicationSession sbean = null;
+    if (session != null) {
+      sbean = new ApplicationSession();
+
+      sbean.setId(session.getId());
+      sbean.setCreationTime(new Date(session.getCreationTime().toEpochMilli()));
+      sbean.setLastAccessTime(new Date(session.getLastAccessedTime().toEpochMilli()));
+      sbean.setMaxIdleTime(session.getMaxInactiveInterval().getSeconds() * 1000L);
+      sbean.setManagerType(session.getClass().getName());
+      sbean.setInfo(session.getClass().getSimpleName());
+
+      boolean sessionSerializable = true;
+      int attributeCount = 0;
+      long size = 0;
+
+      Set<Object> processedObjects = new HashSet<>(1000);
+
+      for (String name : session.getAttributeNames()) {
+        Object obj = session.getAttribute(name);
+        sessionSerializable = sessionSerializable && obj instanceof Serializable;
+
+        long objSize = 0;
+        if (calcSize) {
+          try {
+            objSize += Instruments.sizeOf(name, processedObjects);
+            objSize += Instruments.sizeOf(obj, processedObjects);
+          } catch (Exception ex) {
+            logger.error("Cannot estimate size of attribute '{}'", name, ex);
+          }
+        }
+
+        if (addAttributes) {
+          Attribute saBean = new Attribute();
+          saBean.setName(name);
+          saBean.setType(obj != null ? obj.getClass().getName() : "null");
+          saBean.setValue(obj);
+          saBean.setSize(objSize);
+          saBean.setSerializable(obj instanceof Serializable);
+          sbean.addAttribute(saBean);
+        }
+        attributeCount++;
+        size += objSize;
+      }
+
+      sbean.setObjectCount(attributeCount);
+      sbean.setSize(size);
+      sbean.setSerializable(sessionSerializable);
+
+      // Optionally handle last accessed IP/locale if stored as attributes
+      String lastAccessedIp = (String) session.getAttribute(ApplicationSession.LAST_ACCESSED_BY_IP);
+      if (lastAccessedIp != null) {
+        sbean.setLastAccessedIp(lastAccessedIp);
+        sbean.setLastAccessedIpLocale(
+            (Locale) session.getAttribute(ApplicationSession.LAST_ACCESSED_LOCALE));
+      }
+    }
+    return sbean;
+  }
+
+  /**
    * Gets the application attributes.
    *
    * @param context the context

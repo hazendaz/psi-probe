@@ -22,8 +22,10 @@ import java.util.regex.Pattern;
 import org.apache.catalina.Context;
 import org.apache.catalina.Session;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.support.MessageSourceAccessor;
+import org.springframework.session.FindByIndexNameSessionRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,6 +44,9 @@ import psiprobe.tools.SecurityUtils;
  */
 @Controller
 public class ListSessionsController extends AbstractContextHandlerController {
+
+  @Autowired(required = false)
+  private FindByIndexNameSessionRepository<? extends org.springframework.session.Session> springSessionRepository;
 
   @RequestMapping(path = "/sessions.htm")
   @Override
@@ -117,6 +122,22 @@ public class ListSessionsController extends AbstractContextHandlerController {
             }
             sessionList.add(appSession);
           }
+        }
+      }
+    }
+
+    // Spring Session support
+    if (springSessionRepository != null) {
+      Iterable<? extends org.springframework.session.Session> springSessions =
+          springSessionRepository.findByIndexNameAndIndexValue(
+              FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME, "").values();
+
+      for (org.springframework.session.Session springSession : springSessions) {
+        ApplicationSession appSession =
+            ApplicationUtils.getApplicationSession(springSession, calcSize, searchInfo.isUseAttr());
+        if (appSession != null && matchSession(appSession, searchInfo)) {
+          appSession.setApplicationName("springSession");
+          sessionList.add(appSession);
         }
       }
     }
