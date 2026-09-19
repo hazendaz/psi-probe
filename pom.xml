@@ -203,7 +203,7 @@
         <tomee.version>10.2.0</tomee.version>
         <transaction-api.version>2.0.1</transaction-api.version>
         <ucp.version>21.23.0.0</ucp.version>
-        <webjars-locator.version>0.52</webjars-locator.version>
+        <webjars-locator.version>1.1.5</webjars-locator.version>
         <wrapper.version>3.2.3</wrapper.version>
         <xstream.version>1.4.21</xstream.version>
         <vibur-dbcp.version>26.0</vibur-dbcp.version>
@@ -627,7 +627,7 @@
             <!-- WebJars -->
             <dependency>
                 <groupId>org.webjars</groupId>
-                <artifactId>webjars-locator</artifactId>
+                <artifactId>webjars-locator-lite</artifactId>
                 <version>${webjars-locator.version}</version>
             </dependency>
             <dependency>
